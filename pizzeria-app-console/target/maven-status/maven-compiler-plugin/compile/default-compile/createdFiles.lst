@@ -1,0 +1,10 @@
+fr\pizzeria\ihm\choix\ListeCategorie.class
+fr\pizzeria\ihm\choix\Supprimer.class
+fr\pizzeria\ihm\IhmUtil.class
+fr\pizzeria\ihm\Menu.class
+fr\pizzeria\ihm\choix\AfficherCarte.class
+fr\pizzeria\ihm\choix\Choix.class
+fr\pizzeria\ihm\choix\Ajouter.class
+fr\pizzeria\ihm\choix\Modifier.class
+fr\pizzeria\console\ConsoleApp.class
+fr\pizzeria\ihm\choix\AfficherPizzaPlusCher.class
