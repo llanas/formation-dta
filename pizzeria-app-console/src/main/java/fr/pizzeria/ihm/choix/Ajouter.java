@@ -28,7 +28,7 @@ public class Ajouter extends Choix {
 				break;
 			}
 			String nomPizza = ihm.getNom();
-			if( codePizza.equals(abandonner) ){
+			if( nomPizza.equals(abandonner) ){
 				valide = true;
 				break;
 			}
@@ -44,7 +44,7 @@ public class Ajouter extends Choix {
 			}
 			try {
 				String code = ihm.getPizzaDao().ajouter(codePizza, nomPizza, prixPizza, typePizza);
-				ihm.systemOut("La pizza ci-dessous à été ajouter");
+				ihm.systemOut("La pizza ci-dessous ï¿½ ï¿½tï¿½ ajouter");
 				ihm.afficherPizza(ihm.getPizzaDao().recupererPizza(code));
 				valide = true;
 			} catch (PizzaException e) {

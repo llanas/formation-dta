@@ -36,7 +36,7 @@ public class Modifier extends Choix {
 					break;
 				}
 				String nomPizza = ihm.getNom();
-				if (codePizza.equals(abandonner)) {
+				if (nomPizza.equals(abandonner)) {
 					valide = true;
 					break;
 				}
