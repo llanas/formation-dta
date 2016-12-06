@@ -1,0 +1,79 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>formation-dta</groupId>
+    <artifactId>boris-pizzeria-app</artifactId>
+    <version>1.0</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+  
+  <artifactId>boris-pizzeria-console</artifactId>
+  
+  <build>
+  
+	  <resources>
+	  	<resource>
+	  		<directory>src/main/resources</directory>
+	  		<filtering>true</filtering>
+	  	</resource>
+	  </resources>
+
+	<pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.0.2</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>fr.pizzeria.console.ConsoleApp</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</pluginManagement>
+	
+ </build>
+ 
+ <profiles>
+ 	<profile>
+ 		<id>Dev</id>
+ 		<activation>
+ 			<activeByDefault>true</activeByDefault>
+ 		</activation>
+ 		<properties>
+ 			<typeDao>fr.pizzeria.dao.PizzaDaoFactoryList</typeDao>
+ 		</properties>
+ 	</profile>
+ 	<profile>
+ 		<id>prod</id>
+ 		<properties>
+ 			<typeDao>fr.pizzeria.dao.PizzaDaoFactoryFichier</typeDao>
+ 		</properties>
+ 	</profile>
+ </profiles>
+  
+  <dependencies>
+  
+  	<dependency>
+  		<groupId>junit</groupId>
+  		<artifactId>junit</artifactId>
+  	</dependency>
+  	
+  	<dependency>
+  		<groupId>${project.groupId}</groupId>
+  		<artifactId>boris-pizzeria-dao</artifactId>
+  	</dependency>
+  	
+  	<dependency>
+  		<groupId>${project.groupId}</groupId>
+  		<artifactId>boris-pizzeria-model</artifactId>
+  	</dependency>
+  	
+  </dependencies>
+  
+</project>

@@ -2,18 +2,18 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>dta</groupId>
-  <artifactId>pizzeria-app</artifactId>
+  <groupId>formation-dta</groupId>
+  <artifactId>boris-pizzeria-app</artifactId>
   <version>1.0</version>
   <packaging>pom</packaging>
 
-  <name>pizzeria-app</name>
+  <name>boris-pizzeria-app</name>
   <url>http://maven.apache.org</url>
  
 	<modules>
-	  	<module>../pizzeria-app-console</module>
-	  	<module>../pizzeria-app-dao</module>
-	  	<module>../pizzeria-app-model</module>
+	  	<module>boris-pizzeria-console</module>
+	  	<module>boris-pizzeria-dao</module>
+	  	<module>boris-pizzeria-model</module>
 	</modules>
 	
  	<build>
@@ -37,24 +37,29 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
-<dependencyManagement>
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-    	<groupId>${project.groupId}</groupId>
-    	<artifactId>pizzeria-app-dao</artifactId>
-    	<version>${project.version}</version>
-    </dependency>
-    <dependency>
-    	<groupId>${project.groupId}</groupId>
-    	<artifactId>pizzeria-app-model</artifactId>
-    	<version>${project.version}</version>
-    </dependency>
-  </dependencies>
-</dependencyManagement>
+	<dependencyManagement>
+	  <dependencies>
+	    <dependency>
+	      <groupId>junit</groupId>
+	      <artifactId>junit</artifactId>
+	      <version>3.8.1</version>
+	      <scope>test</scope>
+	    </dependency>
+	    <dependency>
+	    	<groupId>org.apache.commons</groupId>
+	    	<artifactId>commons-lang3</artifactId>
+	    	<version>3.5</version>
+	    </dependency>
+	    <dependency>
+	    	<groupId>${project.groupId}</groupId>
+	    	<artifactId>boris-pizzeria-dao</artifactId>
+	    	<version>${project.version}</version>
+	    </dependency>
+	    <dependency>
+	    	<groupId>${project.groupId}</groupId>
+	    	<artifactId>boris-pizzeria-model</artifactId>
+	    	<version>${project.version}</version>
+	    </dependency>
+	  </dependencies>
+	</dependencyManagement>
 </project>

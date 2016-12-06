@@ -10,12 +10,5 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/pizzeria-app-console">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="pizzeria-app-console"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/pizzeria-app-dao"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/pizzeria-app-model"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
