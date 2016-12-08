@@ -46,11 +46,6 @@
 	      <scope>test</scope>
 	    </dependency>
 	    <dependency>
-	    	<groupId>org.apache.commons</groupId>
-	    	<artifactId>commons-lang3</artifactId>
-	    	<version>3.5</version>
-	    </dependency>
-	    <dependency>
 	    	<groupId>${project.groupId}</groupId>
 	    	<artifactId>boris-pizzeria-dao</artifactId>
 	    	<version>${project.version}</version>
