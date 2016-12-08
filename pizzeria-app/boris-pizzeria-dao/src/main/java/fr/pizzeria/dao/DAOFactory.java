@@ -2,11 +2,11 @@ package fr.pizzeria.dao;
 
 import fr.pizzeria.dao.pizza.PizzaDao;
 
-public abstract class DaoFactory {
+public abstract class DAOFactory {
 
 	PizzaDao pizzaDao;
 
-	public DaoFactory(PizzaDao pizzaDao) {
+	public DAOFactory(PizzaDao pizzaDao) {
 		super();
 		this.pizzaDao = pizzaDao;
 	}

@@ -1,5 +1,6 @@
 package fr.pizzeria.dao;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import fr.pizzeria.exception.CodeException;
@@ -12,9 +13,9 @@ import fr.pizzeria.model.Pizza;
 public class MetierDaoPizza {
 
 	/**
-	 * Permet de créer un Objet {@link Pizza}<br/>
+	 * Permet de crï¿½er un Objet {@link Pizza}<br/>
 	 * 
-	 * Vérifie les différents paramètres d'entrée graçe aux méthodes :<br/>
+	 * Vï¿½rifie les diffï¿½rents paramï¿½tres d'entrï¿½e graï¿½e aux mï¿½thodes :<br/>
 	 * <ul>
 	 * 	<li>{@link #verifierIndex(Integer)}</li>
 	 * 	<li>{@link #verifierCode(String)}</li>
@@ -24,17 +25,17 @@ public class MetierDaoPizza {
 	 * </ul>
 	 * 
 	 * @param index - 
-	 * 		Integer correspondant à l'index de la pizza
+	 * 		Integer correspondant ï¿½ l'index de la pizza
 	 * @param code - 
 	 * 		String correspondant au code de la pizza
 	 * @param nom - 
-	 * 		String correspondant au libellé de la pizza
+	 * 		String correspondant au libellï¿½ de la pizza
 	 * @param prix - 
 	 * 		Double correspondant au prix de la pizza
 	 * @param type - 
-	 * 		{@link CategoriePizza} correspondant au type de pizza (contenu dans l'énumération)
+	 * 		{@link CategoriePizza} correspondant au type de pizza (contenu dans l'ï¿½numï¿½ration)
 	 * @return
-	 * 		{@link Pizza} l'objet créé
+	 * 		{@link Pizza} l'objet crï¿½ï¿½
 	 * @throws PizzaException
 	 */
 	public Pizza creerPizza(String code, String nom, Double prix, String type) throws PizzaException {
@@ -42,12 +43,12 @@ public class MetierDaoPizza {
 	}
 
 	/**
-	 * Vérifie si le code passé en paramètre est bien composé de 3 Lettre et si il n'est pas déjà présent dans la {@link #listePizza}
+	 * Vï¿½rifie si le code passï¿½ en paramï¿½tre est bien composï¿½ de 3 Lettre et si il n'est pas dï¿½jï¿½ prï¿½sent dans la {@link #listePizza}
 	 * 
 	 * @param code - 
 	 * 		String correspondant aux code de la pizza
 	 * @return
-	 * 		le code passé en paramètre si il n'y a pas eu d'exception
+	 * 		le code passï¿½ en paramï¿½tre si il n'y a pas eu d'exception
 	 * @throws PizzaException
 	 * 		Renvoie une {@link PizzaException} de type {@link CodeException}
 	 */
@@ -62,17 +63,17 @@ public class MetierDaoPizza {
 	
 	/* private String isCodeExist( String code ) {
 		if( listePizza.stream().map(Pizza::getCode).filter(f -> f.equals(code)).findAny().isPresent() ) {
-			throw new CodeException("Le code " + code + " existe déjà");
+			throw new CodeException("Le code " + code + " existe dï¿½jï¿½");
 		}
 	} */
 
 	/**
-	 * Vérifie si le nom passé en paramêtre n'est pas null et ne dépasse pas les 13 caractère
+	 * Vï¿½rifie si le nom passï¿½ en paramï¿½tre n'est pas null et ne dï¿½passe pas les 13 caractï¿½re
 	 * 
 	 * @param nom - 
-	 * 		String correspondant au libellé de la pizza
+	 * 		String correspondant au libellï¿½ de la pizza
 	 * @return
-	 * 		Le String passé en paramêtre si il n'y a pas eu d'exception
+	 * 		Le String passï¿½ en paramï¿½tre si il n'y a pas eu d'exception
 	 * @throws PizzaException
 	 * 		Renvoie une {@link PizzaException} de type {@link NomException}
 	 */
@@ -86,12 +87,12 @@ public class MetierDaoPizza {
 	}
 	
 	/**
-	 * Vérifie si le prix entré en paramêtre n'est pas null
+	 * Vï¿½rifie si le prix entrï¿½ en paramï¿½tre n'est pas null
 	 * 
 	 * @param prix - 
 	 * 		Double correspondant au prix de la pizza
 	 * @return
-	 * 		Le Double passé en paramêtre si il n'y a pas eu d'exception
+	 * 		Le Double passï¿½ en paramï¿½tre si il n'y a pas eu d'exception
 	 * @throws PizzaException
 	 * 		Renvoie une {@link PizzaException} de type {@link PrixException}
 	 */
@@ -105,12 +106,12 @@ public class MetierDaoPizza {
 	}
 	
 	/**
-	 * Vérifie si le String passé en paramètre n'est pas null et si ce String correspond à une des valeurs de l'énumération {@link CategoriePizza}
+	 * Vï¿½rifie si le String passï¿½ en paramï¿½tre n'est pas null et si ce String correspond ï¿½ une des valeurs de l'ï¿½numï¿½ration {@link CategoriePizza}
 	 * 
 	 * @param type - 
-	 * 		String correspondant à une catégorie de pizza
+	 * 		String correspondant ï¿½ une catï¿½gorie de pizza
 	 * @return
-	 * 		Une des valeurs de l'énumération {@link CategoriePizza} si il n'y a pas eu d'exception
+	 * 		Une des valeurs de l'ï¿½numï¿½ration {@link CategoriePizza} si il n'y a pas eu d'exception
 	 * @throws PizzaException
 	 * 		Renvoie une {@link PizzaException}
 	 */
@@ -120,6 +121,14 @@ public class MetierDaoPizza {
 			return CategoriePizza.valueOf(type.toUpperCase());
 		} else {
 			throw new PizzaException("Le type : " + type + " n'est pas valide");
+		}
+	}
+	
+	public String isCodeExist( String code, List<Pizza> pizzas ) throws CodeException {
+		if( pizzas.stream().map(Pizza::getCode).filter(f -> f.equals(code)).findAny().isPresent() ) {
+			throw new CodeException("Le code " + code + " existe dï¿½jï¿½");
+		} else {
+			return code;
 		}
 	}
 	

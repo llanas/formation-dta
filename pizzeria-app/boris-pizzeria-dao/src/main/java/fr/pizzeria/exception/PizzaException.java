@@ -1,6 +1,6 @@
 package fr.pizzeria.exception;
 
-public class PizzaException extends Exception {
+public class PizzaException extends RuntimeException {
 		
 	private String message;
 	

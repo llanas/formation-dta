@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
-import fr.pizzeria.dao.DaoFactory;
+import fr.pizzeria.dao.DAOFactory;
 import fr.pizzeria.dao.pizza.PizzaDao;
 import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
@@ -12,13 +12,13 @@ import fr.pizzeria.model.Pizza;
 public class IhmUtil {
 	
 	private Scanner sc;
-	private DaoFactory daoFactory;
+	private DAOFactory daoFactory;
 	private int taille;
 	
 	private static final String ABANDONNER		= "99";
 	
 
-	public IhmUtil( int taille, Scanner sc, DaoFactory daoFactory ) {
+	public IhmUtil( int taille, Scanner sc, DAOFactory daoFactory ) {
 		
 		super();
 		this.sc = sc;
