@@ -1,36 +1,41 @@
 package fr.pizzeria.dao.pizza;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import fr.pizzeria.dao.MetierDaoPizza;
 import fr.pizzeria.exception.CodeException;
 import fr.pizzeria.exception.PizzaException;
 import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
-public class PizzaDaoFactoryList implements PizzaDao {
+public class PizzaDaoList implements PizzaDao {
 	
+	private MetierDaoPizza metier;
+	
+	List<Pizza> listePizza = new ArrayList<Pizza>();
 	
 	/**
 	 * Constructeur par d�fault de la classe PizzaDaoImpl qui impl�mente l'interface PizzaDao
 	 * Ce constructeur permet de cr�er une liste d'objet {@link Pizza} pr�d�finie.
 	 * 
 	 */
-	public PizzaDaoFactoryList() {
+	public PizzaDaoList() {
 		
-		listePizza.add(new Pizza("PEP","P�p�roni",12.50, CategoriePizza.VIANDE));
-		listePizza.add(new Pizza("MAR","Margherita",14.00, CategoriePizza.VIANDE));
-		listePizza.add(new Pizza("REI","La Reine",11.50, CategoriePizza.VIANDE));
-		listePizza.add(new Pizza("FRO","La 4 Fromages",12.00, CategoriePizza.SANS_VIANDE));
-		listePizza.add(new Pizza("CAN","Cannibale",12.50, CategoriePizza.VIANDE));
-		listePizza.add(new Pizza("SAV","Savoyarde",13.00, CategoriePizza.VIANDE));
-		listePizza.add(new Pizza("ORI","L'Orientale",13.50, CategoriePizza.VIANDE));
-		listePizza.add(new Pizza("IND","L'Indienne",14.00, CategoriePizza.VIANDE));
+		listePizza.add(new Pizza(1, "PEP","P�p�roni",12.50, CategoriePizza.VIANDE));
+		listePizza.add(new Pizza(2, "MAR","Margherita",14.00, CategoriePizza.VIANDE));
+		listePizza.add(new Pizza(3, "REI","La Reine",11.50, CategoriePizza.VIANDE));
+		listePizza.add(new Pizza(4, "FRO","La 4 Fromages",12.00, CategoriePizza.SANS_VIANDE));
+		listePizza.add(new Pizza(5, "CAN","Cannibale",12.50, CategoriePizza.VIANDE));
+		listePizza.add(new Pizza(6, "SAV","Savoyarde",13.00, CategoriePizza.VIANDE));
+		listePizza.add(new Pizza(7, "ORI","L'Orientale",13.50, CategoriePizza.VIANDE));
+		listePizza.add(new Pizza(8, "IND","L'Indienne",14.00, CategoriePizza.VIANDE));
 		
 	}
 	
 	@Override
 	public List<Pizza> getListePizza() {
-		return PizzaDaoFactoryList.listePizza;
+		return this.listePizza;
 	}
 	
 	@Override
@@ -52,7 +57,7 @@ public class PizzaDaoFactoryList implements PizzaDao {
 	public String ajouter( String code, String nom, Double prix, String type ) throws PizzaException {
 		
 		listePizza.add( metier.creerPizza( code, nom, prix,  type ));
-		return (code);
+		return code;
 	}
 
 	/**
@@ -69,11 +74,13 @@ public class PizzaDaoFactoryList implements PizzaDao {
 	 * 
 	 */
 	@Override
-	public String modifier( String code, String nom, Double prix, String type ) throws PizzaException {
+	public String modifier( String code, String nom, Double prix, String type, String oldCode ) throws PizzaException {
 		
-		metier.verifierCode(code);
-		recupererPizza(code).setNom(metier.verifierNom(nom));
-		recupererPizza(code).setPrix(metier.verifierPrix(prix));
+		Pizza pizza = recupererPizza(oldCode);
+		pizza.setCode(metier.verifierCode(code));
+		pizza.setNom(metier.verifierNom(nom));
+		pizza.setPrix(metier.verifierPrix(prix));
+		pizza.setType(metier.verifierType(type));
 		return code;	
 	}
 
@@ -89,17 +96,5 @@ public class PizzaDaoFactoryList implements PizzaDao {
 		metier.verifierCode(code);
 		listePizza.remove(recupererPizza(code));
 		return code;	
-	}
-	
-	// A CHANGER
-	
-	@Override
-	public String isCodeExist( String code ) throws CodeException {
-		if( listePizza.stream().map(Pizza::getCode).filter(f -> f.equals(code)).findAny().isPresent() ) {
-			throw new CodeException("Le code " + code + " existe d�j�");
-		} else {
-			return code;
-		}
-	}
-	
+	}	
 }

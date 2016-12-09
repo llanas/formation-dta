@@ -1,19 +1,23 @@
 package fr.pizzeria.exception;
 
 public class PizzaException extends RuntimeException {
-		
-	private String message;
-	
+
 	public PizzaException() {
-		
-	}
-	
-	public PizzaException( String message ) {
-		this.message = message;
+		super();
 	}
 
-	public String message() {
-		return this.message;
+	public PizzaException(String arg0, Throwable arg1) {
+		super(arg0, arg1);
 	}
+
+	public PizzaException(String message) {
+		super(message);
+	}
+
+	public PizzaException(Throwable cause) {
+		super(cause);
+	}
+	
+	
 
 }

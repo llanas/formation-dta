@@ -8,6 +8,17 @@
   </parent>
   <artifactId>boris-pizzeria-dao</artifactId>
   <dependencies>
+  
+  	<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-entitymanager</artifactId>
+  	</dependency>
+  	
+  	<dependency>
+		    <groupId>org.hibernate.javax.persistence</groupId>
+		    <artifactId>hibernate-jpa-2.1-api</artifactId>
+	</dependency>
+	
   	<dependency>
   		<groupId>junit</groupId>
   		<artifactId>junit</artifactId>

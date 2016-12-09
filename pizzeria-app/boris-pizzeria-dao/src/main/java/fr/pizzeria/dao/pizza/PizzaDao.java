@@ -1,21 +1,12 @@
 package fr.pizzeria.dao.pizza;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import fr.pizzeria.dao.MetierDaoPizza;
-import fr.pizzeria.exception.CodeException;
 import fr.pizzeria.exception.PizzaException;
 import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
 public interface PizzaDao {
-	
-	
-
-	List<Pizza> listePizza = new ArrayList<Pizza>();
-	
-	MetierDaoPizza metier = new MetierDaoPizza();
 	
 	/**
 	 * Permet de r�cup�rer un objet Pizza depuis List<Pizza> dont l'index correspond � l'entier pass� en param�tre
@@ -71,7 +62,7 @@ public interface PizzaDao {
 	 * 		Entier correspondant � l'index de la pizza qui � �t� modifi�
 	 * @throws PizzaException
 	 */
-	String modifier( String code, String nom, Double prix, String type ) throws PizzaException;
+	String modifier( String code, String nom, Double prix, String type, String oldCode) throws PizzaException;
 	
 	/**
 	 * Permet de supprimer un objet {@link Pizza} d'une {@link List}
@@ -83,6 +74,4 @@ public interface PizzaDao {
 	 * @throws PizzaException
 	 */
 	String supprimer( String code ) throws PizzaException;
-	
-	String isCodeExist( String code ) throws CodeException;
 }

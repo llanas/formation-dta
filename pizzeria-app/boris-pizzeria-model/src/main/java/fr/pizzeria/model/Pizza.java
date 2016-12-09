@@ -1,24 +1,41 @@
 package fr.pizzeria.model;
 
+import javax.persistence.*;
+
+@Entity
 public class Pizza{
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private String code, nom;
+	private String code;
+	private String nom;
 	private Double prix;
+	@Enumerated
 	private CategoriePizza type;
 	private static int nbPizzas;
 	
+	/**
+	 *  Constructeur vide pour JPA persistence */
 	public Pizza() {
-		
+		//VIDE
 	}
-		
-	public Pizza( String code, String nom, double prix, CategoriePizza type ){
+	
+	public Pizza( String code, String nom, Double prix, CategoriePizza type ){
 		
 		this.code = code;
 		this.nom = nom;
 		this.prix = prix;
 		this.type = type;
-		Pizza.nbPizzas ++;
+	}
+		
+	public Pizza( int id, String code, String nom, Double prix, CategoriePizza type ){
+		
+		this.id = id;
+		this.code = code;
+		this.nom = nom;
+		this.prix = prix;
+		this.type = type;
 	}
 
 	public int getId() {
@@ -57,7 +74,7 @@ public class Pizza{
 		return prix;
 	}
 
-	public void setPrix(double prix) {
+	public void setPrix(Double prix) {
 		this.prix = prix;
 	}
 

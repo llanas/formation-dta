@@ -4,11 +4,14 @@ import java.util.ResourceBundle;
 import java.util.Scanner;
 
 import fr.pizzeria.dao.DAOFactory;
-import fr.pizzeria.dao.FichierMetier;
 import fr.pizzeria.ihm.IhmUtil;
 import fr.pizzeria.ihm.Menu;
 
 public class ConsoleApp {
+	
+	private ConsoleApp() {
+		
+	}
 
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 
@@ -18,11 +21,9 @@ public class ConsoleApp {
 		String config = bundle.getString("dao.impl");
 		DAOFactory daoFactory = (DAOFactory) Class.forName(config).newInstance();
 		
-		IhmUtil ihm = new IhmUtil( 55, new Scanner(System.in), daoFactory);
+		IhmUtil ihm = new IhmUtil( 100, new Scanner(System.in), daoFactory);
 
 		Menu application = new Menu(ihm);
-
-		FichierMetier fichier = new FichierMetier();
 		
 		ihm.systemOut("LOGICIEL ADMINISTRATEUR PIZZERIA");
 		
@@ -31,7 +32,6 @@ public class ConsoleApp {
 			application.afficherMenu();
 			run = application.getChoix();
 		}
-		fichier.SupprimerDossier("src/fr/pizzeria/dao/data");
 		ihm.systemOut("FERMETURE DU LOGICIEL");
 		ihm.sl(1);
 	}

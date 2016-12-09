@@ -1,8 +1,9 @@
 package fr.pizzeria.ihm.choix;
 
+import java.util.logging.Logger;
+
 import fr.pizzeria.exception.PizzaException;
 import fr.pizzeria.ihm.IhmUtil;
-import fr.pizzeria.model.Pizza;
 
 public class Supprimer extends Choix {
 	
@@ -29,19 +30,18 @@ public class Supprimer extends Choix {
 				valide = true;
 				break;
 			} else {
-				String codePizza = ihm.getCode();
+				String codePizza = ihm.getOldCode();
 				if (codePizza.equals(abandonner)) {
 					valide = true;
 					break;
 				} else {
 					try {
-						Pizza pizzaAncienne = ihm.getPizzaDao().recupererPizza(codePizza);
-						ihm.systemOut("La pizza ci-dessous à été supprimer");
-						ihm.afficherPizza(pizzaAncienne);
 						ihm.getPizzaDao().supprimer(codePizza);
+						ihm.systemOut("La pizza a bien Ã©tÃ© supprimer");
 						valide = true;
 					} catch (PizzaException e) {
-						ihm.systemOut(e.message());
+						Logger.getLogger(e.getMessage());
+						throw new PizzaException(e);
 					}
 				}
 			}

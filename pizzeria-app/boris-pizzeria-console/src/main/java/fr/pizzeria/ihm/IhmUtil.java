@@ -89,8 +89,29 @@ public class IhmUtil {
 		return code;		
 	}
 	
-	public String getCode() {
+	public String getOldCode() {
 	
+		boolean valide = false;
+		String code = null;
+		systemOut("Veuillez saisir un code de pizza");
+		sl(1);
+		while(!valide) {
+			code = sc.next();
+			if( code.matches("[^0-9]{3}") ){
+				code = code.toUpperCase();
+				valide = true;
+			} else if(code.equals(ABANDONNER)){
+				valide = true;
+			} else {
+				systemOut("Merci d'entrer un code de valide");
+				sl(1);
+			}
+		}
+		return code;
+	}
+	
+	public String getNewCode() {
+		
 		boolean valide = false;
 		String code = null;
 		systemOut("Veuillez saisir un Code � 3 lettres");
@@ -118,9 +139,7 @@ public class IhmUtil {
 		String nom = null;
 		while(!valide) {
 			nom = sc.next();
-			if( nom.length() <= 13 ) {
-				valide = true;
-			} else if(nom.equals(ABANDONNER)){
+			if( nom.length() <= 13 || nom.equals(ABANDONNER)) {
 				valide = true;
 			} else {
 				systemOut("Le nom ne doit pas d�passer 13 caract�res");
@@ -140,17 +159,14 @@ public class IhmUtil {
 		sl(1);
 		while(!valide) {
 			prix = sc.next();
-			if( prix.matches("[0-9]{1,}[.]{0,1}[0-9]{0,2}") ) {
-				valide = true;
-			} else if(prix.equals(ABANDONNER)){
+			if( prix.matches("[0-9]{1,}[.]{0,1}[0-9]{0,2}") || prix.equals(ABANDONNER)) {
 				valide = true;
 			} else {
 				systemOut("Merci d'entrer un prix valide");
 				sl(1);
 			}
 		}
-		double prixFinal = Double.parseDouble(prix);
-		return prixFinal;
+		return Double.parseDouble(prix);
 	}
 	
 	public String getCategorie() {
@@ -158,16 +174,14 @@ public class IhmUtil {
 		boolean valide = false;
 		systemOut("Veuillez choisir un type de pizza");
 		sl(1);
-		Arrays.asList(CategoriePizza.values()).forEach(p ->{
+		Arrays.asList(CategoriePizza.values()).forEach(p ->{ 
 			systemOut(p.toString().toUpperCase());
 		});
 		sl(1);
 		String type = null;
 		while(!valide) {
 			type = sc.next();
-			if( isCategorieExist(type) ){
-				valide = true;
-			} else if(type.equals(ABANDONNER)) {
+			if( isCategorieExist(type) || type.equals(ABANDONNER)){
 				valide = true;
 			} else {
 				systemOut("Merci d'entrer un type valide");
@@ -178,7 +192,7 @@ public class IhmUtil {
 	}
 	
 	public void afficherPizza( Pizza pizza ) {
-		systemOut((pizza.getCode() + " -> " + pizza.getNom() + " (" + pizza.getPrix() + " �) | " + pizza.getType().toString()));
+		systemOut(pizza.getCode() + " -> " + pizza.getNom() + " (" + pizza.getPrix() + " �) | " + pizza.getType().toString());
 	}
 	
 	private boolean isCategorieExist(String type) {

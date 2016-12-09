@@ -1,8 +1,9 @@
 package fr.pizzeria.ihm.choix;
 
+import java.util.logging.Logger;
+
 import fr.pizzeria.exception.PizzaException;
 import fr.pizzeria.ihm.IhmUtil;
-import fr.pizzeria.model.Pizza;
 
 public class Modifier extends Choix {
 	
@@ -22,48 +23,26 @@ public class Modifier extends Choix {
 	@Override
 	public void executer() {
 		
-		Choix afficher = new AfficherCarte(ihm);
-		afficher.executer();
-		boolean valide = false;
-		do {
-			if (ihm.getPizzaDao().getListePizza().size() == 0) {
-				valide = true;
-				break;
-			} else {
-				String codePizza = ihm.getCode();
-				if (codePizza.equals(abandonner)) {
-					valide = true;
-					break;
-				}
-				String nomPizza = ihm.getNom();
-				if (nomPizza.equals(abandonner)) {
-					valide = true;
-					break;
-				}
-				Double prixPizza = ihm.getPrix();
-				if (String.valueOf(prixPizza).equals(abandonner)) {
-					valide = true;
-					break;
-				}
-				String typePizza = ihm.getCategorie();
-				if (typePizza.equals(abandonner)) {
-					valide = true;
-					break;
-				}
-				try {
-					Pizza anciennePizza = ihm.getPizzaDao().recupererPizza(codePizza);
-					ihm.systemOut("PIZZA AVANT MODIFICATION");
-					ihm.afficherPizza(anciennePizza);
-					ihm.getPizzaDao().modifier(codePizza, nomPizza, prixPizza, typePizza);
-					ihm.systemOut("PIZZA APRES MODIFICATION");
-					ihm.afficherPizza(ihm.getPizzaDao().recupererPizza(codePizza));
-					valide = true;
-				} catch (PizzaException e) {
-					ihm.systemOut(e.message());
-				} 
+		String oldPizza;
+		String codePizza;
+		String nomPizza;
+		Double prixPizza;
+		String typePizza;
+		if(
+				backToMenu(oldPizza = ihm.getOldCode()) &&
+				backToMenu(codePizza = ihm.getNewCode()) &&
+				backToMenu(nomPizza = ihm.getNom()) &&
+				backToMenu((String.valueOf(prixPizza = ihm.getPrix()))) &&
+				backToMenu((typePizza = ihm.getCategorie()))
+						) {
+			try {
+				ihm.getPizzaDao().modifier(codePizza, nomPizza, prixPizza, typePizza, oldPizza);
+				ihm.systemOut("La pizza à bien été modifié");
+			} catch( PizzaException e) {
+				Logger.getLogger(e.getMessage());
+				throw new PizzaException(e);
 			}
-			
-		}while(!valide);
+		}
 	}
 
 	

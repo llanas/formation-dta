@@ -6,6 +6,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.jboss.logging.Logger;
+
+import fr.pizzeria.exception.FichierException;
 import fr.pizzeria.model.Pizza;
 
 public class FichierMetier {
@@ -13,46 +16,47 @@ public class FichierMetier {
 	private static final String CHEMIN 		= "src/main/resources/data";
 	
 	/**
-	 * Permet de créer un fichier texte nommé <CODE_PIZZA>.txt contenant les informations d'un objet {@link Pizza} tel que :
+	 * Permet de crï¿½er un fichier texte nommï¿½ <CODE_PIZZA>.txt contenant les informations d'un objet {@link Pizza} tel que :
 	 * "<NOM_PIZZA>;<PRIX_PIZZA>;<TYPE_PIZZA>
 	 * 
 	 * @param pizza
-	 * 		Correspond à l'objet {@link Pizza} à enregistrer
+	 * 		Correspond ï¿½ l'objet {@link Pizza} ï¿½ enregistrer
+	 * @throws FichierException 
 	 */
-	public void SauvegarderDansFichier( Pizza pizza ) {
+	public void sauvegarderDansFichier( Pizza pizza ) throws FichierException {
 		
-		try {
-			File fichier = new File(CHEMIN,  pizza.getCode() + ".txt");
-			FileWriter ecrireDansFichier = new FileWriter(fichier);
-			ecrireDansFichier.write(pizza.getNom() + ";" + pizza.getPrix() + ";" + pizza.getType().name());
-			ecrireDansFichier.flush();
-			ecrireDansFichier.close();
-			} catch(Exception e) {
-			e.printStackTrace();
+		try (FileWriter fw = new FileWriter(new File(CHEMIN,  pizza.getCode() + ".txt"))){
+			fw.write(pizza.getNom() + ";" + pizza.getPrix() + ";" + pizza.getType().name());
+			fw.flush();
+			fw.close();
+		} catch( IOException e ) {
+			Logger.getLogger(e.getMessage());
+			throw new FichierException(e);
 		}
 	}
 	
 	/**
-	 * Permet de supprimer le fichier texte d'un objet {@link Pizza} passé en paramêtre
+	 * Permet de supprimer le fichier texte d'un objet {@link Pizza} passï¿½ en paramï¿½tre
 	 * 
 	 * @param pizza
-	 * 		Correspond à l'objet {@link Pizza} à supprimer
+	 * 		Correspond ï¿½ l'objet {@link Pizza} ï¿½ supprimer
 	 */
-	public void SupprimerDansFichier( String code ) {
+	public boolean supprimerDansFichier( String code ) {
 		
 		File fichier = new File(CHEMIN,  code + ".txt");
-		fichier.delete();
+		return fichier.delete();
 	}
 	
 	/**
-	 * Permet de supprimer tous les fichiers et dossier contenu dans le chemin passé en paramêtre.
-	 * Dans le cas présent, cette fonction est appelé à la fermeture de l'application.
+	 * Permet de supprimer tous les fichiers et dossier contenu dans le chemin passï¿½ en paramï¿½tre.
+	 * Dans le cas prï¿½sent, cette fonction est appelï¿½ ï¿½ la fermeture de l'application.
 	 * 
 	 * 
 	 * @param chemin
-	 * 		Correspond au chemin du dossier dont le contenu est à supprimer
+	 * 		Correspond au chemin du dossier dont le contenu est ï¿½ supprimer
+	 * @throws FichierException 
 	 */
-	public void SupprimerDossier( String chemin )
+	public void supprimerDossier( String chemin ) throws FichierException
 	{
 	  File path = new File( CHEMIN );
 	  if( path.exists() )
@@ -62,9 +66,11 @@ public class FichierMetier {
 	    {
 	      if( files[ i ].isDirectory() )
 	      {
-	        SupprimerDossier( path+"\\"+files[ i ] );
+	        supprimerDossier( path+"\\"+files[ i ] );
 	      }
-	      files[ i ].delete();
+	      if(files[ i ].delete()){
+	    	  throw new FichierException("Impossible de supprimer le fichier");
+	      }
 	    }
 	  }
 	}
@@ -80,8 +86,6 @@ public class FichierMetier {
 		BufferedReader reader = new BufferedReader(f);
 		String linePizza = reader.readLine();
 		reader.close();
-		String[] pizzaAttributes = linePizza.split(";");
-		return pizzaAttributes;
-		
+		return linePizza.split(";");
 	}
 }

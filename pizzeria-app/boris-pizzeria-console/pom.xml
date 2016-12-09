@@ -46,19 +46,29 @@
  			<activeByDefault>true</activeByDefault>
  		</activation>
  		<properties>
- 			<typeDao>fr.pizzeria.dao.DaoFactoryBDD</typeDao>
+ 			<typeDao>fr.pizzeria.dao.DaoJPA</typeDao>
  		</properties>
  	</profile>
  	<profile>
  		<id>prod</id>
  		<properties>
- 			<typeDao>fr.pizzeria.dao.DaoFactoryFichier</typeDao>
+ 			<typeDao>fr.pizzeria.dao.DaoFichier</typeDao>
  		</properties>
  	</profile>
  </profiles>
   
   <dependencies>
   
+  	<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-entitymanager</artifactId>
+  	</dependency>
+  	
+  	<dependency>
+		    <groupId>org.hibernate.javax.persistence</groupId>
+		    <artifactId>hibernate-jpa-2.1-api</artifactId>
+	</dependency>
+	
   	<dependency>
   		<groupId>junit</groupId>
   		<artifactId>junit</artifactId>

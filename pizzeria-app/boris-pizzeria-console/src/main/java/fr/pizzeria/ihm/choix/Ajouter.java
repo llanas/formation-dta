@@ -1,7 +1,10 @@
 package fr.pizzeria.ihm.choix;
 
+import java.util.logging.Logger;
+
 import fr.pizzeria.exception.PizzaException;
 import fr.pizzeria.ihm.IhmUtil;
+import fr.pizzeria.model.CategoriePizza;
 
 public class Ajouter extends Choix {
 	
@@ -20,35 +23,21 @@ public class Ajouter extends Choix {
 	@Override
 	public void executer() {
 		
-		boolean valide = false;
-		while(!valide) {
-			String codePizza = ihm.getCode();
-			if( codePizza.equals(abandonner) ){
-				valide = true;
-				break;
-			}
-			String nomPizza = ihm.getNom();
-			if( nomPizza.equals(abandonner) ){
-				valide = true;
-				break;
-			}
-			Double prixPizza = ihm.getPrix();
-			if( String.valueOf(prixPizza).equals(abandonner) ){
-				valide = true;
-				break;
-			}
-			String typePizza = ihm.getCategorie();
-			if( typePizza.equals(abandonner) ) {
-				valide = true;
-				break;
-			}
+		String codePizza;
+		String nomPizza;
+		Double prixPizza;
+		String typePizza;
+		if(backToMenu(codePizza = ihm.getNewCode()) &&
+				backToMenu(nomPizza = ihm.getNom()) &&
+				backToMenu((String.valueOf(prixPizza = ihm.getPrix()))) &&
+				backToMenu((typePizza = ihm.getCategorie()))
+						) {
 			try {
-				String code = ihm.getPizzaDao().ajouter(codePizza, nomPizza, prixPizza, typePizza);
-				ihm.systemOut("La pizza ci-dessous � �t� ajouter");
-				ihm.afficherPizza(ihm.getPizzaDao().recupererPizza(code));
-				valide = true;
-			} catch (PizzaException e) {
-				ihm.systemOut(e.message());
+				ihm.getPizzaDao().ajouter(codePizza, nomPizza, prixPizza, typePizza);
+				ihm.systemOut("La pizza à bien été ajouter.");
+			} catch( PizzaException e) {
+				Logger.getLogger(e.getMessage());
+				throw new PizzaException(e);
 			}
 		}
 	}

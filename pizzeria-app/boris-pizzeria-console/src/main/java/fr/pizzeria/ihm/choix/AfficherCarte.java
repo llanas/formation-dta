@@ -1,7 +1,6 @@
 package fr.pizzeria.ihm.choix;
 
 import fr.pizzeria.ihm.IhmUtil;
-import fr.pizzeria.model.Pizza;
 
 public class AfficherCarte extends Choix {
 	
@@ -19,12 +18,12 @@ public class AfficherCarte extends Choix {
 
 	public void executer() {
 		
+		
 		ihm.getPizzaDao().getListePizza().forEach(p -> {
 			ihm.afficherPizza(p);
 		});
 		if( ihm.getPizzaDao().getListePizza().size() == 0 ){
 			ihm.systemOut("La liste ne contient plus de pizza!");
 		}
-		ihm.systemOut(Pizza.getNbPizzas() + " pizzas ajouter à ce jour.");
 	}
 }

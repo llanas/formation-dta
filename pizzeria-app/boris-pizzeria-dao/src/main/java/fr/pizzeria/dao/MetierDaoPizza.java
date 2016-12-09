@@ -11,6 +11,8 @@ import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
 public class MetierDaoPizza {
+	
+	private static final String NOT_VALIDE 			= " n'est pas valide";
 
 	/**
 	 * Permet de cr�er un Objet {@link Pizza}<br/>
@@ -38,8 +40,12 @@ public class MetierDaoPizza {
 	 * 		{@link Pizza} l'objet cr��
 	 * @throws PizzaException
 	 */
-	public Pizza creerPizza(String code, String nom, Double prix, String type) throws PizzaException {
-		return new Pizza( verifierCode(code), verifierNom(nom), verifierPrix(prix), verifierType(type));
+	public Pizza creerPizza( String code, String nom, Double prix, String type ) throws PizzaException {
+		return new Pizza( verifierCode(code), verifierNom(nom), verifierPrix(prix), verifierType(type) );
+	}
+	
+	public Pizza creerPizza( int id, String code, String nom, Double prix, String type ) throws PizzaException {
+		return new Pizza(id, verifierCode(code), verifierNom(nom), verifierPrix(prix), verifierType(type) );
 	}
 
 	/**
@@ -57,15 +63,9 @@ public class MetierDaoPizza {
 		if( code != null && code.matches("[^0-9]{3}")) {
 			return code;
 		} else {
-			throw new CodeException("Le code : " + code + " n'est pas valide");
+			throw new CodeException("Le code : " + code + NOT_VALIDE);
 		}
 	}
-	
-	/* private String isCodeExist( String code ) {
-		if( listePizza.stream().map(Pizza::getCode).filter(f -> f.equals(code)).findAny().isPresent() ) {
-			throw new CodeException("Le code " + code + " existe d�j�");
-		}
-	} */
 
 	/**
 	 * V�rifie si le nom pass� en param�tre n'est pas null et ne d�passe pas les 13 caract�re
@@ -82,7 +82,7 @@ public class MetierDaoPizza {
 		if( nom != null && nom.length() <= 13 ) {
 			return nom;
 		} else {
-			throw new NomException("Le nom : " + nom + " n'est pas valide");
+			throw new NomException("Le nom : " + nom + NOT_VALIDE);
 		}
 	}
 	
@@ -101,7 +101,7 @@ public class MetierDaoPizza {
 		if( prix != null ) {
 			return prix;
 		} else {
-			throw new PrixException("Le prix : " + prix + " n'est pas valide");
+			throw new PrixException("Le prix : " + prix + NOT_VALIDE);
 		}
 	}
 	
@@ -120,7 +120,7 @@ public class MetierDaoPizza {
 		if( type != null && isCategorieExist(type) ) {
 			return CategoriePizza.valueOf(type.toUpperCase());
 		} else {
-			throw new PizzaException("Le type : " + type + " n'est pas valide");
+			throw new PizzaException("Le type : " + type + NOT_VALIDE);
 		}
 	}
 	
@@ -136,7 +136,7 @@ public class MetierDaoPizza {
 		return Stream.of(CategoriePizza.values()).filter(c -> c.name().equalsIgnoreCase(type)).findAny().isPresent() ;
 	}
 
-	public Pizza creerPizzaDepuisFichier(String p, String[] valeurs) throws Exception {
+	public Pizza creerPizzaDepuisFichier(String p, String[] valeurs) throws PizzaException {
 		return creerPizza( p, valeurs[0], Double.valueOf(valeurs[1]), valeurs[2]);
 	}
 }
