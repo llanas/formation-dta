@@ -14,6 +14,8 @@
 	  	<module>boris-pizzeria-console</module>
 	  	<module>boris-pizzeria-dao</module>
 	  	<module>boris-pizzeria-model</module>
+	  	
+	  	<module>boris-pizzeria-client</module>
 	</modules>
 	
  	<build>
@@ -79,6 +81,12 @@
    		 	<version>5.1.40</version>
    		 	<scope>runtime</scope>
 		</dependency>
+
+	<dependency>
+		<groupId>org.apache.directory.studio</groupId>
+		<artifactId>org.apache.commons.codec</artifactId>
+		<version>1.8</version>
+	</dependency>
 	  </dependencies>
 	</dependencyManagement>
 	

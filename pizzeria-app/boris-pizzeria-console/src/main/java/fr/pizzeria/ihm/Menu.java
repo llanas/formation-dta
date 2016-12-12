@@ -13,7 +13,7 @@ import fr.pizzeria.ihm.choix.Supprimer;
 
 public class Menu {
 	
-	public Map<Integer, Choix> navigateur = new HashMap<Integer, Choix>();
+	private Map<Integer, Choix> navigateur = new HashMap<Integer, Choix>();
 	private IhmUtil ihm;
 	
 	public Menu( IhmUtil ihm ){

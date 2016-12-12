@@ -3,11 +3,11 @@ package fr.pizzeria.dao.pizza;
 import java.util.List;
 import java.util.logging.Level;
 
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
 import org.jboss.logging.Logger;
@@ -20,10 +20,10 @@ import fr.pizzeria.model.Pizza;
 public class PizzaDaoJPA implements PizzaDao {
 
 	private EntityManagerFactory emf;
-	private MetierDaoPizza metier;
+	private MetierDaoPizza metier = new MetierDaoPizza();
 	
 	public PizzaDaoJPA() {
-		this.emf = Persistence.createEntityManagerFactory("boris-pizzeria-console");
+		this.emf = Persistence.createEntityManagerFactory("boris-pizzeria-app");
 		java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
 	}
 	
@@ -39,7 +39,7 @@ public class PizzaDaoJPA implements PizzaDao {
 		try{
 			et.begin();
 			return run.exec(em, et);
-		} catch( EntityExistsException e ) {
+		} catch( PersistenceException e ) {
 			et.rollback();
 			Logger.getLogger(e.getMessage());
 			throw new PizzaException(e);
@@ -95,7 +95,7 @@ public class PizzaDaoJPA implements PizzaDao {
 		});
 	}
 	
-	public Pizza getPizzaJPA(String code, EntityManager em) throws PizzaException {
+	public Pizza getPizzaJPA(String code, EntityManager em) {
 		TypedQuery<Pizza> query = em.createQuery("SELECT p FROM Pizza p WHERE p.code ='" + code + "'", Pizza.class);
 		return query.getSingleResult();
 	}

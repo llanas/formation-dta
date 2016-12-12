@@ -4,7 +4,6 @@ import java.util.logging.Logger;
 
 import fr.pizzeria.exception.PizzaException;
 import fr.pizzeria.ihm.IhmUtil;
-import fr.pizzeria.model.CategoriePizza;
 
 public class Ajouter extends Choix {
 	

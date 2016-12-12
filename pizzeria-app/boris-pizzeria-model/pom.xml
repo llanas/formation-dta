@@ -16,5 +16,10 @@
   		<groupId>junit</groupId>
   		<artifactId>junit</artifactId>
   	</dependency>
+  	
+  	<dependency>
+		<groupId>org.apache.directory.studio</groupId>
+		<artifactId>org.apache.commons.codec</artifactId>
+	</dependency>
   </dependencies>
 </project>

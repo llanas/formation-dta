@@ -22,7 +22,7 @@ public class AfficherCarte extends Choix {
 		ihm.getPizzaDao().getListePizza().forEach(p -> {
 			ihm.afficherPizza(p);
 		});
-		if( ihm.getPizzaDao().getListePizza().size() == 0 ){
+		if( ihm.getPizzaDao().getListePizza().isEmpty() ){
 			ihm.systemOut("La liste ne contient plus de pizza!");
 		}
 	}

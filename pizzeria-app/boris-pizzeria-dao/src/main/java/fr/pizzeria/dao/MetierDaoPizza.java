@@ -1,6 +1,10 @@
 package fr.pizzeria.dao;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import fr.pizzeria.exception.CodeException;
@@ -8,6 +12,9 @@ import fr.pizzeria.exception.NomException;
 import fr.pizzeria.exception.PizzaException;
 import fr.pizzeria.exception.PrixException;
 import fr.pizzeria.model.CategoriePizza;
+import fr.pizzeria.model.Client;
+import fr.pizzeria.model.Commande;
+import fr.pizzeria.model.Livreur;
 import fr.pizzeria.model.Pizza;
 
 public class MetierDaoPizza {
@@ -138,5 +145,15 @@ public class MetierDaoPizza {
 
 	public Pizza creerPizzaDepuisFichier(String p, String[] valeurs) throws PizzaException {
 		return creerPizza( p, valeurs[0], Double.valueOf(valeurs[1]), valeurs[2]);
+	}
+
+	public Client creerClient(String prenom, String nom, String mail, String password) {
+		return new Client(prenom, nom, mail, password);
+	}
+
+	public Commande creerCommande(Client client, Livreur livreur, Date dateCommande, Set<Pizza> pizzas) {
+		DateFormat dateFormat = new SimpleDateFormat("ddMMHHmmss");
+		String numero = client.getNom() + livreur.getPrenom() +	dateFormat.format(dateCommande);
+		return new Commande(numero, client, livreur, dateCommande, pizzas);
 	}
 }

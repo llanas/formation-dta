@@ -3,17 +3,21 @@ package fr.pizzeria.model;
 import javax.persistence.*;
 
 @Entity
+@Table(name="pizza")
 public class Pizza{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	@Column(name="code", length=3, nullable=false, unique=true)
 	private String code;
+	@Column(name="nom", length=30, nullable=false)
 	private String nom;
+	@Column(name="prix", nullable=false)
 	private Double prix;
-	@Enumerated
+	@Enumerated(EnumType.STRING)
+	@Column(name="type", nullable=false)
 	private CategoriePizza type;
-	private static int nbPizzas;
 	
 	/**
 	 *  Constructeur vide pour JPA persistence */
@@ -38,7 +42,7 @@ public class Pizza{
 		this.type = type;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
@@ -50,7 +54,7 @@ public class Pizza{
 		this.type = type;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -70,20 +74,12 @@ public class Pizza{
 		this.nom = nom;
 	}
 
-	public double getPrix() {
+	public Double getPrix() {
 		return prix;
 	}
 
 	public void setPrix(Double prix) {
 		this.prix = prix;
-	}
-
-	public static int getNbPizzas() {
-		return nbPizzas;
-	}
-
-	public static void setNbPizzas(int nbPizzas) {
-		Pizza.nbPizzas = nbPizzas;
 	}
 	
 	public static String compareCategorie(Pizza pizza) {
