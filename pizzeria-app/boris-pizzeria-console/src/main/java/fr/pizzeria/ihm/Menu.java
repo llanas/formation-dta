@@ -37,7 +37,7 @@ public class Menu {
 
 	public boolean getChoix() {
 		
-		int choix = ihm.getIndex(navigateur.size()+1, "Que souhaitez vous faire ?");
+		int choix = ihm.getInt(navigateur.size()+1, "Que souhaitez vous faire ?");
 		if(choix == 99){
 			return false;
 		} else {

@@ -28,19 +28,19 @@ public class Modifier extends Choix {
 		String nomPizza;
 		Double prixPizza;
 		String typePizza;
-		if(
-				backToMenu(oldPizza = ihm.getOldCode()) &&
-				backToMenu(codePizza = ihm.getNewCode()) &&
-				backToMenu(nomPizza = ihm.getNom()) &&
-				backToMenu((String.valueOf(prixPizza = ihm.getPrix()))) &&
-				backToMenu((typePizza = ihm.getCategorie()))
-						) {
+		Integer indexPizza = 0;
+		while(indexPizza==0){
+			oldPizza 		= ihm.getString(3, "Entrez le code de la pizza à modifié");
+			codePizza		= ihm.getString(3, "Entrez le nouveau code de pizza");
+			nomPizza		= ihm.getString(30, "Entrez le nom de la pizza");
+			prixPizza		= ihm.getDouble("Entrez le prix de la pizza");
+			typePizza		= ihm.getCategorie();
 			try {
-				ihm.getPizzaDao().modifier(codePizza, nomPizza, prixPizza, typePizza, oldPizza);
-				ihm.systemOut("La pizza à bien été modifié");
+				indexPizza = ihm.getPizzaDao().modifier(codePizza, nomPizza, prixPizza, typePizza, oldPizza);
+				String message = (indexPizza == 0) ? "Erreur lors de la modification de pizza" : "La pizza à bien été modifié";
+				ihm.systemOut(message);
 			} catch( PizzaException e) {
 				Logger.getLogger(e.getMessage());
-				throw new PizzaException(e);
 			}
 		}
 	}

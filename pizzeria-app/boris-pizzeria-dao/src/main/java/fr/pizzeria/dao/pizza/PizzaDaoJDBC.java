@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import fr.pizzeria.exception.CodeException;
 import fr.pizzeria.exception.DAOException;
 import fr.pizzeria.exception.PizzaException;
 import fr.pizzeria.model.CategoriePizza;
@@ -96,7 +95,7 @@ public class PizzaDaoJDBC implements PizzaDao {
 	}
 
 	@Override
-	public String ajouter(String code, String nom, Double prix, String type) throws PizzaException {
+	public Integer ajouter(String code, String nom, Double prix, String type) throws PizzaException {
 		return executePrep((Connection conn) -> {
 			PreparedStatement ps = initialisationRequetePreparee(conn, SQL_INSERT, true,
 					code, nom, prix, type);
@@ -104,12 +103,12 @@ public class PizzaDaoJDBC implements PizzaDao {
 			if( statut == 0 ){
 				throw new DAOException("Echec de l'ajout de pizza.");
 			}
-			return code;
+			return statut;
 		});
 	}
 
 	@Override
-	public String modifier( String code, String nom, Double prix, String type, String oldCode ) throws PizzaException {
+	public Integer modifier( String code, String nom, Double prix, String type, String oldCode ) throws PizzaException {
 		return executePrep((Connection conn) -> {
 			PreparedStatement ps = initialisationRequetePreparee(conn, SQL_UPDATE, true, 
 					code, nom, prix, type, oldCode);
@@ -117,19 +116,19 @@ public class PizzaDaoJDBC implements PizzaDao {
 			if( statut == 0 ) {
 				throw new DAOException("Echec de la modification de la pizza");
 			}
-			return code;
+			return statut;
 		});
 	}
 
 	@Override
-	public String supprimer(String code) throws PizzaException {
+	public Integer supprimer(String code) throws PizzaException {
 		return executePrep((Connection conn) -> {
 			PreparedStatement ps = initialisationRequetePreparee(conn, SQL_DELETE, false, code.toUpperCase());
 			int statut = ps.executeUpdate();
 			if( statut == 0 ) {
 				throw new DAOException("Echec de la suppression de la pizza");
 			}
-			return code;			
+			return statut;			
 		});
 	}
 	

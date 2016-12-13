@@ -28,14 +28,16 @@ public class Inscription extends Choix {
 		String prenomClient;
 		String mailClient;
 		String mdpClient;
-		if(backToMenu(prenomClient = ihm.getPrenom()) &&
-				backToMenu(nomClient = ihm.getNom()) &&
-				backToMenu(mailClient = ihm.getMail()) &&
-				backToMenu(mdpClient = ihm.getPassword())
-				) {
+		int indexClient = 0;
+		while(indexClient==0){
+			nomClient = ihm.getString(30, "Entrez votre nom");
+			prenomClient = ihm.getString(30, "Entrez votre prenom");
+			mailClient = ihm.getString(30, "Entrez votre e-mail");
+			mdpClient = ihm.getString(30, "Entrez votre mot de passe");
 			try{
-				ihm.getClientDao().ajouterClient(prenomClient, nomClient, mailClient, mdpClient);
-				ihm.systemOut("Vous êtes maintenant inscrit à la Pizzeria! Merci");
+				indexClient = ihm.getClientDao().ajouterClient(prenomClient, nomClient, mailClient, mdpClient);
+				String message = ( indexClient == 0 ) ? "Impossible de vous inscrire" : "Bienvenue sur l'application!";
+				ihm.systemOut(message);
 			} catch( ClientException e ) {
 				Logger.getLogger(e.getMessage());
 				throw new PizzaException(e);

@@ -43,7 +43,7 @@ public interface PizzaDao {
 	 * @throws PizzaException
 	 * 		Les exceptions sont g�n�r� lors de la v�rification des champs permettant la cr�ation de l'objet Pizza voir {@link PizzaDaoList}
 	 */
-	String ajouter( String code, String nom, Double prix, String type ) throws PizzaException;
+	Integer ajouter( String code, String nom, Double prix, String type ) throws PizzaException;
 	
 	/**
 	 * Permet de modifier un objet {@link Pizza} dans une {@link Link}
@@ -62,7 +62,7 @@ public interface PizzaDao {
 	 * 		Entier correspondant � l'index de la pizza qui � �t� modifi�
 	 * @throws PizzaException
 	 */
-	String modifier( String code, String nom, Double prix, String type, String oldCode) throws PizzaException;
+	Integer modifier( String code, String nom, Double prix, String type, String oldCode) throws PizzaException;
 	
 	/**
 	 * Permet de supprimer un objet {@link Pizza} d'une {@link List}
@@ -73,5 +73,7 @@ public interface PizzaDao {
 	 * 		Entier correspondant � l'index de la pizza supprimer
 	 * @throws PizzaException
 	 */
-	String supprimer( String code ) throws PizzaException;
+	Integer supprimer( String code ) throws PizzaException;
+	
+	
 }

@@ -22,29 +22,21 @@ public class Supprimer extends Choix {
 	@Override
 	public void executer() {
 		
-		Choix afficher = new AfficherCarte(ihm);
-		afficher.executer();
-		boolean valide = false;
-		do{
-			if( ihm.getPizzaDao().getListePizza().size() == 0 ){
-				valide = true;
-				break;
-			} else {
-				String codePizza = ihm.getOldCode();
-				if (codePizza.equals(abandonner)) {
-					valide = true;
-					break;
-				} else {
-					try {
-						ihm.getPizzaDao().supprimer(codePizza);
-						ihm.systemOut("La pizza a bien été supprimer");
-						valide = true;
-					} catch (PizzaException e) {
-						Logger.getLogger(e.getMessage());
-						throw new PizzaException(e);
-					}
+		if( ihm.getPizzaDao().getListePizza().isEmpty() ){
+			ihm.systemOut("Aucune pizza enregistré");
+		} else {
+			String codePizza;
+			Integer indexPizza = 0;
+			while(indexPizza==0){
+				try {
+					codePizza = ihm.getString(3, "Entrez le code de la pizza à supprimer");
+					indexPizza = ihm.getPizzaDao().supprimer(codePizza);
+					String message = (indexPizza == 0) ? "Erreur lors de la suppression de pizza" : "La pizza à bien été supprimé";
+					ihm.systemOut(message);
+				} catch (PizzaException e) {
+					Logger.getLogger(e.getMessage());
 				}
 			}
-		}while(!valide);
+		}
 	}
 }

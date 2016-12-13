@@ -1,12 +1,16 @@
 package fr.pizzeria.ihm;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 import fr.pizzeria.dao.DAOFactory;
 import fr.pizzeria.dao.commande.CommandeDao;
 import fr.pizzeria.dao.personne.client.ClientDao;
 import fr.pizzeria.dao.personne.livreur.LivreurDao;
 import fr.pizzeria.dao.pizza.PizzaDao;
+import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
 public class IhmUtil {
@@ -29,7 +33,7 @@ public class IhmUtil {
 	public void systemOut( String texte ){
 		
 		StringBuilder texteFinal = new StringBuilder(taille);
-		int reste = texte.length() - ( taille - 2 );
+		int reste = ( texte.length() - ( taille - 2 ) );
 		reste *= -1;
 		int espaceGauche = ( reste % 2 == 0) ? (reste / 2) : (reste / 2) + 1;
 		int espaceDroit = reste - espaceGauche;
@@ -61,7 +65,28 @@ public class IhmUtil {
 			}
 	}
 	
-	public int getIndex( int taille, String message ) {
+	public String getString(int taille, String message) {
+		
+		boolean valide = false;
+		systemOut(message);
+		sl(1);
+		String nom = null;
+		while(!valide) {
+			nom = sc.next();
+			if( nom.length() <= taille) {
+				valide = true;
+			} else if (nom.equals(ABANDONNER)) {
+				nom = "0";
+				valide = true;
+			} else {
+				systemOut("Le champ ne doit pas d�passer " + taille + " caractères");
+				sl(1);
+			}
+		}
+		return nom;
+	}
+	
+	public int getInt( int taille, String message ) {
 		
 		boolean valide = false;
 		int code = 0;
@@ -88,124 +113,80 @@ public class IhmUtil {
 		return code;		
 	}
 	
-	public String getNom() {
+	public double getDouble(String message) {
 		
 		boolean valide = false;
-		systemOut("Veuillez saisir votre nom (sans espaces)");
+		String valeur = null;
+		systemOut(message);
 		sl(1);
-		String nom = null;
 		while(!valide) {
-			nom = sc.next();
-			if( nom.length() <= 13 || nom.equals(ABANDONNER)) {
+			valeur = sc.next();
+			if( valeur.matches("[0-9]{1,}[.]{0,1}[0-9]{0,2}")){
+				valide = true;
+			} else if (valeur.equals(ABANDONNER)) {
+				valeur = "0";
 				valide = true;
 			} else {
-				systemOut("Le nom ne doit pas d�passer 13 caract�res");
+				systemOut("Merci d'entrer un valeur valide");
 				sl(1);
 			}
 		}
-		return nom;
+		return Double.parseDouble(valeur);
 	}
 	
-	public String getPrenom() {
+	public String getCategorie() {
 		
 		boolean valide = false;
-		systemOut("Veuillez saisir votre prenom(sans espaces)");
+		systemOut("Veuillez choisir un type de pizza");
 		sl(1);
-		String nom = null;
+		Arrays.asList(CategoriePizza.values()).forEach(p ->{ 
+			systemOut(p.toString().toUpperCase());
+		});
+		sl(1);
+		String type = null;
 		while(!valide) {
-			nom = sc.next();
-			if( nom.length() <= 13 || nom.equals(ABANDONNER)) {
+			type = sc.next();
+			if( isCategorieExist(type) || type.equals(ABANDONNER)){
 				valide = true;
 			} else {
-				systemOut("Le nom ne doit pas d�passer 13 caract�res");
+				systemOut("Merci d'entrer un type valide");
 				sl(1);
 			}
 		}
-		return nom;
+		return type;
 	}
 	
-	public String getMail() {
-		
-		boolean valide = false;
-		systemOut("Veuillez saisir votre addresse Mail");
-		sl(1);
-		String nom = null;
-		while(!valide) {
-			nom = sc.next();
-			if( nom.length() <= 30 || nom.equals(ABANDONNER)) {
-				valide = true;
-			} else {
-				systemOut("Le mail ne doit pas d�passer 30 caract�res");
-				sl(1);
-			}
-		}
-		return nom;
+	public void afficherPizza( Pizza pizza ) {
+		systemOut(pizza.getCode() + " -> " + pizza.getNom() + " (" + pizza.getPrix() + " �) | " + pizza.getType().toString());
 	}
 	
-	public String getPassword() {
-		
-		boolean valide = false;
-		systemOut("Veuillez saisir votre mot de passe");
-		sl(1);
-		String nom = null;
-		while(!valide) {
-			nom = sc.next();
-			if( nom.length() <= 13 || nom.equals(ABANDONNER)) {
-				valide = true;
-			} else {
-				systemOut("Le mot de passe ne doit pas d�passer 13 caract�res");
-				sl(1);
-			}
-		}
-		return nom;
+	public boolean isCodeExist( String code, List<Pizza> pizzas ) {
+		return pizzas.stream().map(Pizza::getCode).filter(f -> f.equals(code)).findAny().isPresent();
 	}
 	
-	public String getOldCode() {
-		
-		boolean valide = false;
-		String code = null;
-		systemOut("Veuillez saisir un code de pizza");
-		sl(1);
-		while(!valide) {
-			code = sc.next();
-			if( code.matches("[^0-9]{3}") ){
-				code = code.toUpperCase();
-				valide = true;
-			} else if(code.equals(ABANDONNER)){
-				valide = true;
-			} else {
-				systemOut("Merci d'entrer un code de valide");
-				sl(1);
-			}
-		}
-		return code;
+	private boolean isCategorieExist(String type) {
+		return Stream.of(CategoriePizza.values()).filter(c -> c.name().equalsIgnoreCase(type)).findAny().isPresent() ;
 	}
-	
+
 	public Scanner getSc() {
 		return sc;
 	}
 	
-	public ClientDao getClientDao() {
-		
-		return daoFactory.getClientDao();
-		
-	}
-
 	public PizzaDao getPizzaDao() {
-
+		
 		return daoFactory.getPizzaDao();
+		
 	}
 
-	public void afficherPizza(Pizza pizza) {
-		systemOut(pizza.getCode() + " -> " + pizza.getNom() + " (" + pizza.getPrix() + " �) | " + pizza.getType().toString());
-	}
-
-	public CommandeDao getCommandeDao() {
-		return daoFactory.getCommandeDao();
+	public ClientDao getClientDao() {
+		return daoFactory.getClientDao();
 	}
 
 	public LivreurDao getLivreurDao() {
 		return daoFactory.getLivreurDao();
 	}
 
+	public CommandeDao getCommandeDao() {
+		return daoFactory.getCommandeDao();
+	}
 }

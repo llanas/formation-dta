@@ -1,13 +1,11 @@
 package fr.pizzeria.ihm.choix;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.dialect.identity.SybaseAnywhereIdentityColumnSupport;
 import org.jboss.logging.Logger;
 
 import fr.pizzeria.exception.CommandeException;
@@ -33,37 +31,38 @@ public class CommanderPizza extends Choix {
 		this.ihm = ihm;
 		this.client = client;
 		this.indexMenu = indexMenu;
-		this.setDescription(indexMenu + " - SE CONNECTER - " + indexMenu);
+		this.setDescription(indexMenu + " - Commander une Pizza - " + indexMenu);
 	}
 
 	@Override
 	public void executer() {
 
-		List<Pizza> pizzas = ihm.getPizzaDao().getListePizza();
-		if(pizzas.isEmpty()){
-			ihm.systemOut("Aucune pizza n'est enregistré");
-		} else {
-			try {
-				Set<Pizza> pizzasCommande = new HashSet<Pizza>();
-				int input = 0;
-				while(input != 99) {
-					pizzas.forEach(p -> {
-						ihm.afficherPizza(p);
-					});
-					ihm.systemOut(" /!\\ Tapez 99 pour sortir finir la commande /!\\  ");
-					ihm.systemOut("Veuillez selectionner la code la pizza à commander");
-					String code = ihm.getOldCode();
-					input = Integer.valueOf(code);
-					pizzasCommande.add(ihm.getPizzaDao().recupererPizza(code));
+		
+		try {
+			Set<Pizza> pizzasCommande = new HashSet<>();
+			String code = "0";
+			while(code=="0"){
+				List<Pizza> pizzas = ihm.getPizzaDao().getListePizza();
+				if( ihm.getPizzaDao().getListePizza().isEmpty() ){ 
+					ihm.systemOut("La liste ne contient plus de pizza!");
+				} else {
+					pizzas.forEach(ihm::afficherPizza);
+					code = ihm.getString(3, "Veuillez selectionner la code la pizza à commander");
+					if(ihm.isCodeExist(code, pizzas)) {
+						int nbPizza = ihm.getInt(10, "Combien de " + ihm.getPizzaDao().recupererPizza(code).getNom() + " voulez vous?");
+						for(int i = 0 ; i < nbPizza ; i++ ){
+							pizzasCommande.add(ihm.getPizzaDao().recupererPizza(code));
+						}
+					} else {
+						ihm.systemOut("Le code est incorecte");
+					}
 				}
-				Livreur livreur = ihm.getLivreurDao().recupererLivreur(1);
-				Date dateCommande = new Date();
-				ihm.getCommandeDao().ajouter(client, livreur, dateCommande, pizzasCommande);
-			} catch (CommandeException | LivreurException e) {
-				Logger.getLogger(e.getMessage());
-				
 			}
-			
+			Livreur livreur = ihm.getLivreurDao().recupererLivreur(1);
+			Date date = new Date();
+			ihm.getCommandeDao().ajouter(this.client, livreur, date, pizzasCommande);
+		} catch (CommandeException | LivreurException e) {
+			Logger.getLogger(e.getMessage());
 		}
 		
 		

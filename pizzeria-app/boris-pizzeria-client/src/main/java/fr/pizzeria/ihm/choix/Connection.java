@@ -4,7 +4,7 @@ import org.jboss.logging.Logger;
 
 import fr.pizzeria.exception.ClientException;
 import fr.pizzeria.ihm.IhmUtil;
-import fr.pizzeria.ihm.Menu;
+import fr.pizzeria.ihm.MenuConnecter;
 import fr.pizzeria.model.Client;
 
 public class Connection extends Choix {
@@ -28,16 +28,24 @@ public class Connection extends Choix {
 
 		String mail;
 		String password;
-		if(backToMenu(mail = ihm.getMail()) &&
-				backToMenu(password = ihm.getPassword())
-				) {
+		Integer indexClient = 0;
+		boolean run = true;
+		while(indexClient==0) {
 			try {
-				Client clientConnecter = ihm.getClientDao().connexion(mail, password);
-				Menu menu = new Menu(this.ihm, clientConnecter);
-			} catch(ClientException e ) {
+				mail = ihm.getString(30, "Entrez votre adresse mail");
+				password = ihm.getString(30, "Entrez votre mot de passe");
+				Client client = ihm.getClientDao().connexion(mail, password);
+				indexClient = client.getId();
+				ihm.systemOut("Bonjour " + client.getPrenom() + " " + client.getNom() + "!");
+				MenuConnecter application = new MenuConnecter(ihm, client);
+				while(run) {
+					ihm.sl(1);
+					application.afficherMenu();
+					run = application.getChoix();
+				}
+			} catch( ClientException e ) {
 				Logger.getLogger(e.getMessage());
 			}
 		}
 	}
-
 }

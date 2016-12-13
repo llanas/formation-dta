@@ -23,9 +23,5 @@ public abstract class Choix {
 		return getDescription();
 	}
 	
-	protected boolean backToMenu( String entreeClavier ) {
-		return !entreeClavier.equals(abandonner);
-	}
-	
 	public abstract void executer();
 }

@@ -6,54 +6,25 @@ import java.util.Set;
 import java.util.logging.Level;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
-import org.jboss.logging.Logger;
-
 import fr.pizzeria.dao.MetierDaoPizza;
-import fr.pizzeria.exception.ClientException;
+import fr.pizzeria.dao.MotherDaoJPA;
 import fr.pizzeria.exception.CommandeException;
 import fr.pizzeria.model.Client;
 import fr.pizzeria.model.Commande;
 import fr.pizzeria.model.Livreur;
 import fr.pizzeria.model.Pizza;
 
-public class CommandeDaoJPA implements CommandeDao {
+public class CommandeDaoJPA extends MotherDaoJPA implements CommandeDao {
 	
-	private EntityManagerFactory emf;
 	private MetierDaoPizza metier = new MetierDaoPizza();
 
 	public CommandeDaoJPA() {
 		this.emf = Persistence.createEntityManagerFactory("boris-pizzeria-app");
 		java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
-	}
-	
-	@FunctionalInterface
-	interface IEntityManager<T> {
-		T exec(EntityManager em, EntityTransaction et);
-	}
-	
-	public <T> T execute(IEntityManager<T> run ) throws CommandeException {
-		
-		EntityManager em = emf.createEntityManager();
-		EntityTransaction et = em.getTransaction();
-		try{
-			et.begin();
-			return run.exec(em, et);
-		} catch( PersistenceException e ) {
-			et.rollback();
-			Logger.getLogger(e.getMessage());
-			throw new CommandeException(e);
-		} finally {
-			et.commit();
-			if (em.isOpen()) {
-				em.close();
-			}
-		}
 	}
 	
 	@Override
@@ -74,7 +45,7 @@ public class CommandeDaoJPA implements CommandeDao {
 	@Override
 	public List<Commande> getListCommandeByPersonne( Client client ) throws CommandeException {
 		return execute((EntityManager em, EntityTransaction et) -> {
-			TypedQuery<Commande> query = em.createQuery("SELECT c FROM Commande c WHERE c.client=" + client.getId(), Commande.class);
+			TypedQuery<Commande> query = em.createQuery("SELECT c FROM Commande c WHERE c.client='" + client.getId() + "' AND c.statut=0", Commande.class);
 			return query.getResultList();
 		});
 	}

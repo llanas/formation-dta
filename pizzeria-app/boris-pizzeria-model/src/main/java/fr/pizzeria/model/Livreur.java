@@ -14,7 +14,13 @@ public class Livreur extends Personne {
 
 	public Livreur() {
 		super();
-		commandes = new HashSet<Commande>();
+		commandes = new HashSet<>();
+	}
+	
+	public Livreur( String prenom, String nom ) {
+		
+		this.prenom = prenom;
+		this.nom = nom;
 	}
 	
 	

@@ -11,7 +11,7 @@ public interface LivreurDao {
 	
 	List<Livreur> getListLivreur() throws LivreurException;
 	
-	Integer ajouterLivreur( String prenom, String nom, String mail, String password ) throws LivreurException;
+	Integer ajouterLivreur( String prenom, String nom ) throws LivreurException;
 
 	Integer supprimerLivreur( String mail ) throws LivreurException;
 	

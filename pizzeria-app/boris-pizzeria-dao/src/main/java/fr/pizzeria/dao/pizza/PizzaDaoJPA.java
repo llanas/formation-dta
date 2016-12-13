@@ -4,51 +4,24 @@ import java.util.List;
 import java.util.logging.Level;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
-import org.jboss.logging.Logger;
-
 import fr.pizzeria.dao.MetierDaoPizza;
+import fr.pizzeria.dao.MotherDaoJPA;
+import fr.pizzeria.exception.CodeException;
 import fr.pizzeria.exception.PizzaException;
 import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
-public class PizzaDaoJPA implements PizzaDao {
-
-	private EntityManagerFactory emf;
+public class PizzaDaoJPA extends MotherDaoJPA implements PizzaDao {
+	
 	private MetierDaoPizza metier = new MetierDaoPizza();
 	
 	public PizzaDaoJPA() {
 		this.emf = Persistence.createEntityManagerFactory("boris-pizzeria-app");
 		java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
-	}
-	
-	@FunctionalInterface
-	interface IEntityManager<T> {
-		T exec(EntityManager em, EntityTransaction et);
-	}
-	
-	public <T> T execute(IEntityManager<T> run ) throws PizzaException {
-		
-		EntityManager em = emf.createEntityManager();
-		EntityTransaction et = em.getTransaction();
-		try{
-			et.begin();
-			return run.exec(em, et);
-		} catch( PersistenceException e ) {
-			et.rollback();
-			Logger.getLogger(e.getMessage());
-			throw new PizzaException(e);
-		} finally {
-			et.commit();
-			if (em.isOpen()) {
-				em.close();
-			}
-		}
 	}
 	
 	@Override
@@ -67,36 +40,45 @@ public class PizzaDaoJPA implements PizzaDao {
 	}
 
 	@Override
-	public String ajouter(String code, String nom, Double prix, String type) {
+	public Integer ajouter(String code, String nom, Double prix, String type) {
 		return execute((EntityManager em, EntityTransaction et) -> {
 			Pizza pizza = metier.creerPizza(code, nom, prix, type);
 			em.persist(pizza);
-			return code;
+			return pizza.getId();
 		});
 	}
 
 	@Override
-	public String modifier(String code, String nom, Double prix, String type, String oldCode) throws PizzaException {
+	public Integer modifier(String code, String nom, Double prix, String type, String oldCode) throws PizzaException {
 		return execute((EntityManager em, EntityTransaction et) -> {
 			Pizza pizza = getPizzaJPA(code, em);
 			pizza.setCode(code);
 			pizza.setNom(nom);
 			pizza.setPrix(prix);
 			pizza.setType(CategoriePizza.valueOf(type.toUpperCase()));
-			return code;
+			return pizza.getId();
 		});
 	}
 
 	@Override
-	public String supprimer(String code) throws PizzaException {
+	public Integer supprimer(String code) throws PizzaException {
 		return execute((EntityManager em, EntityTransaction et) -> {
-			em.remove(getPizzaJPA(code, em));
-			return code;
+			Pizza pizza = getPizzaJPA(code, em);
+			em.remove(pizza);
+			return pizza.getId();
 		});
 	}
 	
 	public Pizza getPizzaJPA(String code, EntityManager em) {
 		TypedQuery<Pizza> query = em.createQuery("SELECT p FROM Pizza p WHERE p.code ='" + code + "'", Pizza.class);
 		return query.getSingleResult();
+	}
+	
+	public String isCodeExist( String code, List<Pizza> pizzas ) throws CodeException {
+		if( pizzas.stream().map(Pizza::getCode).filter(f -> f.equals(code)).findAny().isPresent() ) {
+			throw new CodeException("Le code " + code + " existe d�j�");
+		} else {
+			return code;
+		}
 	}
 }

@@ -1,7 +1,5 @@
 package fr.pizzeria.model;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +16,7 @@ public class Commande {
 	@Column(name="numero_commande")
 	private String numeroCommande;
 	@Column(name="statut")
-	private String statut;
+	private Integer statut;
 	@Column(name="date_commande")
 	private Date dateCommande;
 	@ManyToOne
@@ -38,13 +36,14 @@ public class Commande {
 	
 	public Commande() {
 		super();
-		pizzas = new HashSet<Pizza>();
+		pizzas = new HashSet<>();
 	}
 	
 	public Commande(String numero, Client client, Livreur livreur, Date dateCommande, Set<Pizza> pizzas) {
 
 		super();
 		this.numeroCommande = numero;
+		this.statut = 0;
 		this.client = client;
 		this.livreur = livreur;
 		this.dateCommande = dateCommande;
@@ -63,10 +62,10 @@ public class Commande {
 	public void setNumeroCommande(String numeroCommande) {
 		this.numeroCommande = numeroCommande;
 	}
-	public String getStatut() {
+	public Integer getStatut() {
 		return statut;
 	}
-	public void setStatut(String statut) {
+	public void setStatut(Integer statut) {
 		this.statut = statut;
 	}
 	public Date getDateCommande() {
@@ -93,6 +92,4 @@ public class Commande {
 	public void setPizzas(Set<Pizza> pizzas) {
 		this.pizzas = pizzas;
 	}
-	
-	
 }

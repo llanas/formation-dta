@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.pizzeria.dao.MetierDaoPizza;
-import fr.pizzeria.exception.CodeException;
 import fr.pizzeria.exception.PizzaException;
 import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
@@ -13,7 +12,7 @@ public class PizzaDaoList implements PizzaDao {
 	
 	private MetierDaoPizza metier;
 	
-	List<Pizza> listePizza = new ArrayList<Pizza>();
+	List<Pizza> listePizza = new ArrayList<>();
 	
 	/**
 	 * Constructeur par d�fault de la classe PizzaDaoImpl qui impl�mente l'interface PizzaDao
@@ -42,7 +41,11 @@ public class PizzaDaoList implements PizzaDao {
 	public Pizza recupererPizza( String code ) throws PizzaException{
 		
 		metier.verifierCode(code);
-		return listePizza.stream().filter(p -> p.getCode().equals(code)).findFirst().get();
+		if (listePizza.stream().filter(p -> p.getCode().equals(code)).findFirst().isPresent()) {
+			return listePizza.stream().filter(p -> p.getCode().equals(code)).findFirst().get();
+		} else {
+			return null;
+		}
 	}
 
 	
@@ -54,10 +57,10 @@ public class PizzaDaoList implements PizzaDao {
 	 * Retourne la taille de {@link #listePizza} (qui correspond � l'index de la derni�re pizza ajouter)
 	 */
 	@Override
-	public String ajouter( String code, String nom, Double prix, String type ) throws PizzaException {
+	public Integer ajouter( String code, String nom, Double prix, String type ) throws PizzaException {
 		
 		listePizza.add( metier.creerPizza( code, nom, prix,  type ));
-		return code;
+		return listePizza.size();
 	}
 
 	/**
@@ -74,14 +77,14 @@ public class PizzaDaoList implements PizzaDao {
 	 * 
 	 */
 	@Override
-	public String modifier( String code, String nom, Double prix, String type, String oldCode ) throws PizzaException {
+	public Integer modifier( String code, String nom, Double prix, String type, String oldCode ) throws PizzaException {
 		
 		Pizza pizza = recupererPizza(oldCode);
 		pizza.setCode(metier.verifierCode(code));
 		pizza.setNom(metier.verifierNom(nom));
 		pizza.setPrix(metier.verifierPrix(prix));
 		pizza.setType(metier.verifierType(type));
-		return code;	
+		return listePizza.indexOf(pizza);	
 	}
 
 	/**
@@ -91,10 +94,11 @@ public class PizzaDaoList implements PizzaDao {
 	 * 
 	 */
 	@Override
-	public String supprimer( String code ) throws PizzaException {
+	public Integer supprimer( String code ) throws PizzaException {
 		
 		metier.verifierCode(code);
-		listePizza.remove(recupererPizza(code));
-		return code;	
+		Pizza pizza = recupererPizza(code);
+		listePizza.remove(pizza);
+		return pizza.getId();	
 	}	
 }

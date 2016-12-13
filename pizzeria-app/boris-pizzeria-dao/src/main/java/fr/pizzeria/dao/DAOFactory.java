@@ -11,6 +11,10 @@ public abstract class DAOFactory {
 	ClientDao clientDao;
 	CommandeDao commandeDao;
 	LivreurDao livreurDao;
+	
+	public DAOFactory() {
+		super();
+	}
 
 	public DAOFactory(PizzaDao pizzaDao) {
 		super();
@@ -26,8 +30,9 @@ public abstract class DAOFactory {
 	public DAOFactory(PizzaDao pizzaDao, ClientDao clientDao, CommandeDao commandeDao, LivreurDao livreurDao){
 		super();
 		this.pizzaDao = pizzaDao;
-		this.commandeDao = commandeDao;
 		this.clientDao = clientDao;
+		this.commandeDao = commandeDao;
+		this.livreurDao = livreurDao;
 	}
 
 	public PizzaDao getPizzaDao() {
@@ -43,7 +48,6 @@ public abstract class DAOFactory {
 	}
 
 	public LivreurDao getLivreurDao() {
-
-		return this.getLivreurDao();
+		return this.livreurDao;
 	}
 }

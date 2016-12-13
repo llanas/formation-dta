@@ -23,7 +23,7 @@ public class ListeCommande extends Choix {
 		this.ihm = ihm;
 		this.client = client;
 		this.indexMenu = indexMenu;
-		this.setDescription(indexMenu + " - AFFICHER LA CARTE - " + indexMenu);
+		this.setDescription(indexMenu + " - Lister mes commandes - " + indexMenu);
 	}
 
 	@Override
@@ -34,9 +34,7 @@ public class ListeCommande extends Choix {
 			if(commandes.isEmpty()) {
 				ihm.systemOut("Vous n'avez aucune commande en cours");
 			} else {
-				commandes.forEach(p -> {
-					ihm.systemOut(p.getNumeroCommande());
-				});
+				commandes.stream().map(Commande::getNumeroCommande).forEach(ihm::systemOut);
 			}
 		} catch (CommandeException e) {
 			Logger.getLogger(e.getMessage());

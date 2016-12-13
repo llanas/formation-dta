@@ -153,7 +153,12 @@ public class MetierDaoPizza {
 
 	public Commande creerCommande(Client client, Livreur livreur, Date dateCommande, Set<Pizza> pizzas) {
 		DateFormat dateFormat = new SimpleDateFormat("ddMMHHmmss");
-		String numero = client.getNom() + livreur.getPrenom() +	dateFormat.format(dateCommande);
-		return new Commande(numero, client, livreur, dateCommande, pizzas);
+		StringBuilder numero = new StringBuilder();
+		numero.append(client.getNom()).append(livreur.getPrenom()).append(dateFormat.format(dateCommande));
+		return new Commande(numero.toString(), client, livreur, dateCommande, pizzas);
+	}
+
+	public Livreur creerLivreur(String prenom, String nom) {
+		return new Livreur(prenom, nom);
 	}
 }

@@ -26,17 +26,18 @@ public class Ajouter extends Choix {
 		String nomPizza;
 		Double prixPizza;
 		String typePizza;
-		if(backToMenu(codePizza = ihm.getNewCode()) &&
-				backToMenu(nomPizza = ihm.getNom()) &&
-				backToMenu((String.valueOf(prixPizza = ihm.getPrix()))) &&
-				backToMenu((typePizza = ihm.getCategorie()))
-						) {
+		Integer indexPizza = 0;
+		while(indexPizza==0){
+			codePizza = ihm.getString(3, "Merci d'entrer le code de pizza à ajouter");
+			nomPizza = ihm.getString(30, "Merci d'entrer le nom de la pizza à ajouter");
+			prixPizza = ihm.getDouble("Merci d'entrer le prix de la pizza à ajouter");
+			typePizza = ihm.getCategorie();
 			try {
-				ihm.getPizzaDao().ajouter(codePizza, nomPizza, prixPizza, typePizza);
-				ihm.systemOut("La pizza à bien été ajouter.");
+				indexPizza = ihm.getPizzaDao().ajouter(codePizza, nomPizza, prixPizza, typePizza);
+				String message = (indexPizza == 0) ? "Erreur lors de la création de pizza" : "La pizza à bien été créé";
+				ihm.systemOut(message);
 			} catch( PizzaException e) {
 				Logger.getLogger(e.getMessage());
-				throw new PizzaException(e);
 			}
 		}
 	}

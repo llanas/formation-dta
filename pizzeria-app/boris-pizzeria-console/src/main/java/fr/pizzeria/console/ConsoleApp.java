@@ -25,6 +25,8 @@ public class ConsoleApp {
 
 		Menu application = new Menu(ihm);
 		
+		ihm.importationDonnee();
+		
 		ihm.systemOut("LOGICIEL ADMINISTRATEUR PIZZERIA");
 		
 		while (run) {

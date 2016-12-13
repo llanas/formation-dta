@@ -1,11 +1,18 @@
 package fr.pizzeria.ihm;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
 import fr.pizzeria.dao.DAOFactory;
+import fr.pizzeria.dao.commande.CommandeDao;
+import fr.pizzeria.dao.personne.client.ClientDao;
+import fr.pizzeria.dao.personne.livreur.LivreurDao;
 import fr.pizzeria.dao.pizza.PizzaDao;
+import fr.pizzeria.exception.ClientException;
+import fr.pizzeria.exception.LivreurException;
 import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
@@ -29,7 +36,7 @@ public class IhmUtil {
 	public void systemOut( String texte ){
 		
 		StringBuilder texteFinal = new StringBuilder(taille);
-		int reste = ( texte.length() - ( taille - 2 ) );
+		int reste = texte.length() - ( taille - 2 );
 		reste *= -1;
 		int espaceGauche = ( reste % 2 == 0) ? (reste / 2) : (reste / 2) + 1;
 		int espaceDroit = reste - espaceGauche;
@@ -61,7 +68,28 @@ public class IhmUtil {
 			}
 	}
 	
-	public int getIndex( int taille, String message ) {
+	public String getString(int taille, String message) {
+		
+		boolean valide = false;
+		systemOut(message);
+		sl(1);
+		String nom = null;
+		while(!valide) {
+			nom = sc.next();
+			if( nom.length() <= taille) {
+				valide = true;
+			} else if (nom.equals(ABANDONNER)) {
+				nom = "0";
+				valide = true;
+			} else {
+				systemOut("Le champ ne doit pas d�passer " + taille + " caractères");
+				sl(1);
+			}
+		}
+		return nom;
+	}
+	
+	public int getInt( int taille, String message ) {
 		
 		boolean valide = false;
 		int code = 0;
@@ -88,84 +116,25 @@ public class IhmUtil {
 		return code;		
 	}
 	
-	public String getOldCode() {
-	
-		boolean valide = false;
-		String code = null;
-		systemOut("Veuillez saisir un code de pizza");
-		sl(1);
-		while(!valide) {
-			code = sc.next();
-			if( code.matches("[^0-9]{3}") ){
-				code = code.toUpperCase();
-				valide = true;
-			} else if(code.equals(ABANDONNER)){
-				valide = true;
-			} else {
-				systemOut("Merci d'entrer un code de valide");
-				sl(1);
-			}
-		}
-		return code;
-	}
-	
-	public String getNewCode() {
+	public double getDouble(String message) {
 		
 		boolean valide = false;
-		String code = null;
-		systemOut("Veuillez saisir un Code � 3 lettres");
+		String valeur = null;
+		systemOut(message);
 		sl(1);
 		while(!valide) {
-			code = sc.next();
-			if( code.matches("[^0-9]{3}") ){
-				code = code.toUpperCase();
+			valeur = sc.next();
+			if( valeur.matches("[0-9]{1,}[.]{0,1}[0-9]{0,2}")){
 				valide = true;
-			} else if(code.equals(ABANDONNER)){
+			} else if (valeur.equals(ABANDONNER)) {
+				valeur = "0";
 				valide = true;
 			} else {
-				systemOut("Merci d'entrer un code de 3 � lettres");
+				systemOut("Merci d'entrer un valeur valide");
 				sl(1);
 			}
 		}
-		return code;
-	}
-
-	public String getNom() {
-	
-		boolean valide = false;
-		systemOut("Veuillez saisir le nom (sans espaces)");
-		sl(1);
-		String nom = null;
-		while(!valide) {
-			nom = sc.next();
-			if( nom.length() <= 13 || nom.equals(ABANDONNER)) {
-				valide = true;
-			} else {
-				systemOut("Le nom ne doit pas d�passer 13 caract�res");
-				sl(1);
-			}
-		}
-		char maj = Character.toUpperCase(nom.charAt(0));
-		nom = maj + nom.substring(1).toLowerCase();
-		return nom;
-	}
-
-	public double getPrix() {
-	
-		boolean valide = false;
-		String prix = null;
-		systemOut("Veuillez saisir le prix");
-		sl(1);
-		while(!valide) {
-			prix = sc.next();
-			if( prix.matches("[0-9]{1,}[.]{0,1}[0-9]{0,2}") || prix.equals(ABANDONNER)) {
-				valide = true;
-			} else {
-				systemOut("Merci d'entrer un prix valide");
-				sl(1);
-			}
-		}
-		return Double.parseDouble(prix);
+		return Double.parseDouble(valeur);
 	}
 	
 	public String getCategorie() {
@@ -202,9 +171,52 @@ public class IhmUtil {
 		return sc;
 	}
 	
+	public void importationDonnee() {
+		
+		List<Pizza> listePizza = new ArrayList<>();
+		listePizza.add(new Pizza(1, "PEP","Pépéroni",12.50, CategoriePizza.VIANDE));
+		listePizza.add(new Pizza(2, "MAR","Margherita",14.00, CategoriePizza.VIANDE));
+		listePizza.add(new Pizza(3, "REI","La Reine",11.50, CategoriePizza.VIANDE));
+		listePizza.add(new Pizza(4, "FRO","La 4 Fromages",12.00, CategoriePizza.SANS_VIANDE));
+		listePizza.add(new Pizza(5, "CAN","Cannibale",12.50, CategoriePizza.VIANDE));
+		listePizza.add(new Pizza(6, "SAV","Savoyarde",13.00, CategoriePizza.VIANDE));
+		listePizza.add(new Pizza(7, "ORI","L'Orientale",13.50, CategoriePizza.VIANDE));
+		listePizza.add(new Pizza(8, "IND","L'Indienne",14.00, CategoriePizza.VIANDE));
+		
+		listePizza.forEach(p -> {
+			getPizzaDao().ajouter(p.getCode(), p.getNom(), p.getPrix(), p.getType().toString());
+		});
+		
+		
+		try {
+			getClientDao().ajouterClient("Boris", "Maurence", "boris@maurence.com", "1234");
+			getClientDao().ajouterClient("test", "test", "test@test.com", "1234");
+			getLivreurDao().ajouterLivreur("Livreur1", "Livreur1");
+		} catch ( ClientException | LivreurException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+	
 	public PizzaDao getPizzaDao() {
 		
 		return daoFactory.getPizzaDao();
 		
 	}
+	
+	public ClientDao getClientDao() {
+		return daoFactory.getClientDao();
+	}
+	
+	public CommandeDao getCommandeDao() {
+		return daoFactory.getCommandeDao();
+	}
+	
+	public LivreurDao getLivreurDao() {
+		return daoFactory.getLivreurDao();
+	}
+
+	
 }

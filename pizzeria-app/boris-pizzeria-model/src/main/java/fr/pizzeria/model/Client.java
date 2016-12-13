@@ -17,10 +17,12 @@ public class Client extends Personne {
 	private String password;
 	@OneToMany(mappedBy="client")
 	private Set<Commande> commandes;
+	@Transient
+	private boolean connected;
 	
 	public Client() {
 		super();
-		commandes = new HashSet<Commande>();
+		commandes = new HashSet<>();
 	}
 	
 	public Client(String prenom, String nom, String mail, String password) {

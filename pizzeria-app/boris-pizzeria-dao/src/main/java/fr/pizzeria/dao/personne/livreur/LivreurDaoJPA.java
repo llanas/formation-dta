@@ -1,55 +1,25 @@
 package fr.pizzeria.dao.personne.livreur;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceException;
-import javax.persistence.TypedQuery;
-
-import org.jboss.logging.Logger;
 
 import fr.pizzeria.dao.MetierDaoPizza;
-import fr.pizzeria.exception.ClientException;
-import fr.pizzeria.exception.CommandeException;
+import fr.pizzeria.dao.MotherDaoJPA;
 import fr.pizzeria.exception.LivreurException;
 import fr.pizzeria.model.Livreur;
 
-public class LivreurDaoJPA implements LivreurDao{
+public class LivreurDaoJPA extends MotherDaoJPA implements LivreurDao {
 	
-	private EntityManagerFactory emf;
 	private MetierDaoPizza metier = new MetierDaoPizza();
 	
 	public LivreurDaoJPA() {
 		this.emf = Persistence.createEntityManagerFactory("boris-pizzeria-app");
 		java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
-	}
-	
-	@FunctionalInterface
-	interface IEntityManager<T> {
-		T exec(EntityManager em, EntityTransaction et);
-	}
-	
-	public <T> T execute(IEntityManager<T> run ) throws LivreurException {
-		
-		EntityManager em = emf.createEntityManager();
-		EntityTransaction et = em.getTransaction();
-		try{
-			et.begin();
-			return run.exec(em, et);
-		} catch( PersistenceException e ) {
-			et.rollback();
-			Logger.getLogger(e.getMessage());
-			throw new LivreurException(e);
-		} finally {
-			et.commit();
-			if (em.isOpen()) {
-				em.close();
-			}
-		}
 	}
 
 	@Override
@@ -61,12 +31,16 @@ public class LivreurDaoJPA implements LivreurDao{
 
 	@Override
 	public List<Livreur> getListLivreur() throws LivreurException {
-		return null;
+		return new ArrayList<>();
 	}
 
 	@Override
-	public Integer ajouterLivreur(String prenom, String nom, String mail, String password) throws LivreurException {
-		return null;
+	public Integer ajouterLivreur( String prenom, String nom ) throws LivreurException {
+		return execute((EntityManager em, EntityTransaction et) -> {
+			Livreur livreur = metier.creerLivreur(prenom, nom);
+			em.persist(livreur);
+			return livreur.getId();
+		});
 	}
 
 	@Override
@@ -86,8 +60,8 @@ public class LivreurDaoJPA implements LivreurDao{
 	}
 
 	private Livreur getLivreurJPA(Integer id, EntityManager em) {
-		TypedQuery<Livreur> query = em.createQuery("SELECT l FROM Livreur l WHERE l.id='" + id + "'", Livreur.class);
-		return query.getSingleResult();
+		
+		return em.find(Livreur.class, id);
 	}
 	
 }

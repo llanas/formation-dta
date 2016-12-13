@@ -16,7 +16,7 @@ public class PizzaDaoFichier implements PizzaDao {
 	
 	private FichierMetier fichier;
 	private MetierDaoPizza metier;
-	private List<Pizza> listePizza = new ArrayList<Pizza>();
+	private List<Pizza> listePizza = new ArrayList<>();
 
 	@Override
 	public List<Pizza> getListePizza() throws PizzaException {
@@ -33,39 +33,42 @@ public class PizzaDaoFichier implements PizzaDao {
 	}
 
 	@Override
-	public String ajouter(String code, String nom, Double prix, String type) throws PizzaException {
+	public Integer ajouter(String code, String nom, Double prix, String type) throws PizzaException {
 		Pizza pizza = metier.creerPizza( code, nom, prix,  type);
 		try {
 			fichier.sauvegarderDansFichier( pizza );
+			listePizza.add(pizza);
 		} catch (FichierException e) {
 			Logger.getLogger(e.getMessage());
 			throw new PizzaException(e);
 		}
-		return code;
+		return listePizza.indexOf(pizza);
 	}
 
 	@Override
-	public String modifier( String code, String nom, Double prix, String type, String oldCode ) throws PizzaException {
+	public Integer modifier( String code, String nom, Double prix, String type, String oldCode ) throws PizzaException {
 
+		Pizza pizza = metier.creerPizza(code, nom, prix, type);
 		try {
-			fichier.sauvegarderDansFichier(metier.creerPizza( code, nom, prix,  type ));
+			fichier.sauvegarderDansFichier(pizza);
 		} catch (FichierException e) {
 			Logger.getLogger(e.getMessage());
 			throw new PizzaException(e);
 		}
-		return code;
+		return listePizza.indexOf(pizza);
 	}
 
 	@Override
-	public String supprimer( String code ) throws PizzaException {
+	public Integer supprimer( String code ) throws PizzaException {
 
+		Pizza pizza = recupererPizza(code);
+		int index = pizza.getId();
 		fichier.supprimerDansFichier(code);
-		return code;
+		return index;
 	}
 
 	@Override
 	public Pizza recupererPizza( String code ) {
-		//TODO
 		return null;
 	}
 }

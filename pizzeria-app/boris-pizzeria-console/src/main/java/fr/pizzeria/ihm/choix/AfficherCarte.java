@@ -19,11 +19,10 @@ public class AfficherCarte extends Choix {
 	public void executer() {
 		
 		
-		ihm.getPizzaDao().getListePizza().forEach(p -> {
-			ihm.afficherPizza(p);
-		});
-		if( ihm.getPizzaDao().getListePizza().isEmpty() ){
+		if( ihm.getPizzaDao().getListePizza().isEmpty() ) {
 			ihm.systemOut("La liste ne contient plus de pizza!");
+		} else {
+			ihm.getPizzaDao().getListePizza().forEach(ihm::afficherPizza);
 		}
 	}
 }

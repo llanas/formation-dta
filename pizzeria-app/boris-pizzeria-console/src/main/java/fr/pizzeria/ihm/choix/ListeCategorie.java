@@ -26,9 +26,7 @@ public class ListeCategorie extends Choix {
 	public void executer() {
 		
 		Collections.sort(ihm.getPizzaDao().getListePizza(), Comparator.comparing(Pizza::getType));
-		ihm.getPizzaDao().getListePizza().forEach(p -> {
-			ihm.afficherPizza(p);
-		});
+		ihm.getPizzaDao().getListePizza().forEach(ihm::afficherPizza);
 	}
 
 }
