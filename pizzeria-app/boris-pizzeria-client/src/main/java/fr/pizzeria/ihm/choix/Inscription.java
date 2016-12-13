@@ -3,7 +3,6 @@ package fr.pizzeria.ihm.choix;
 import org.jboss.logging.Logger;
 
 import fr.pizzeria.exception.ClientException;
-import fr.pizzeria.exception.PizzaException;
 import fr.pizzeria.ihm.IhmUtil;
 
 public class Inscription extends Choix {
@@ -40,7 +39,7 @@ public class Inscription extends Choix {
 				ihm.systemOut(message);
 			} catch( ClientException e ) {
 				Logger.getLogger(e.getMessage());
-				throw new PizzaException(e);
+				throw new ClientException(e);
 			}
 		}
 	}

@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.hibernate.dialect.identity.SybaseAnywhereIdentityColumnSupport;
 import org.jboss.logging.Logger;
 
 import fr.pizzeria.exception.CommandeException;
@@ -63,6 +62,7 @@ public class CommanderPizza extends Choix {
 			ihm.getCommandeDao().ajouter(this.client, livreur, date, pizzasCommande);
 		} catch (CommandeException | LivreurException e) {
 			Logger.getLogger(e.getMessage());
+			throw new CommandeException(e);
 		}
 		
 		

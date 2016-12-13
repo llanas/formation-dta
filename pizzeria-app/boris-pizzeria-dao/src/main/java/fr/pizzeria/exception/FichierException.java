@@ -1,6 +1,6 @@
 package fr.pizzeria.exception;
 
-public class FichierException extends Exception {
+public class FichierException extends RuntimeException {
 
 	public FichierException() {
 		super();

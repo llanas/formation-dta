@@ -1,6 +1,6 @@
 package fr.pizzeria.exception;
 
-public class CommandeException extends Exception {
+public class CommandeException extends RuntimeException {
 
 	public CommandeException() {
 		super();

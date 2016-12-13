@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
+import org.jboss.logging.Logger;
+
 import fr.pizzeria.dao.DAOFactory;
 import fr.pizzeria.dao.commande.CommandeDao;
 import fr.pizzeria.dao.personne.client.ClientDao;
@@ -13,6 +15,7 @@ import fr.pizzeria.dao.personne.livreur.LivreurDao;
 import fr.pizzeria.dao.pizza.PizzaDao;
 import fr.pizzeria.exception.ClientException;
 import fr.pizzeria.exception.LivreurException;
+import fr.pizzeria.exception.PizzaException;
 import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
@@ -193,7 +196,8 @@ public class IhmUtil {
 			getClientDao().ajouterClient("test", "test", "test@test.com", "1234");
 			getLivreurDao().ajouterLivreur("Livreur1", "Livreur1");
 		} catch ( ClientException | LivreurException e) {
-			e.printStackTrace();
+			Logger.getLogger(e.getMessage());
+			throw new PizzaException(e);
 		}
 		
 		

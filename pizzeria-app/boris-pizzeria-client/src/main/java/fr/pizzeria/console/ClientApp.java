@@ -7,12 +7,23 @@ import fr.pizzeria.dao.DaoJPA;
 import fr.pizzeria.ihm.IhmUtil;
 import fr.pizzeria.ihm.Menu;
 
+/**
+ * Console d'application Client
+ * 
+ * @author llanas
+ *
+ */
 public class ClientApp {
 	
 	private ClientApp() {
 
 	}
 
+	/**
+	 * Méthode principale de de mon application Client
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		
 		boolean run = true;

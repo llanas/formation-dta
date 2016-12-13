@@ -38,6 +38,7 @@ public class Ajouter extends Choix {
 				ihm.systemOut(message);
 			} catch( PizzaException e) {
 				Logger.getLogger(e.getMessage());
+				throw new PizzaException(e);
 			}
 		}
 	}

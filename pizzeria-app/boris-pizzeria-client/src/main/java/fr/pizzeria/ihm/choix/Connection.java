@@ -45,6 +45,7 @@ public class Connection extends Choix {
 				}
 			} catch( ClientException e ) {
 				Logger.getLogger(e.getMessage());
+				throw new ClientException(e);
 			}
 		}
 	}

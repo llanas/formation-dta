@@ -38,6 +38,7 @@ public class ListeCommande extends Choix {
 			}
 		} catch (CommandeException e) {
 			Logger.getLogger(e.getMessage());
+			throw new CommandeException(e);
 		}
 		
 	}

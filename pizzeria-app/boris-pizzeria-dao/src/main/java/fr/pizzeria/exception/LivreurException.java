@@ -1,6 +1,6 @@
 package fr.pizzeria.exception;
 
-public class LivreurException extends Exception {
+public class LivreurException extends RuntimeException {
 
 	public LivreurException() {
 		super();
