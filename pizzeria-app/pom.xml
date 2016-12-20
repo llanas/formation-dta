@@ -14,7 +14,7 @@
 	  	<module>boris-pizzeria-console</module>
 	  	<module>boris-pizzeria-dao</module>
 	  	<module>boris-pizzeria-model</module>
-	  	
+	  	<module>boris-pizzeria-admin-web</module>
 	  	<module>boris-pizzeria-client</module>
 	</modules>
 	
@@ -44,6 +44,20 @@
 	<dependencyManagement>
 	  <dependencies>
 	  
+	  <!-- https://mvnrepository.com/artifact/jstl/jstl -->
+		<dependency>
+		    <groupId>jstl</groupId>
+		    <artifactId>jstl</artifactId>
+		    <version>1.2</version>
+		</dependency>
+	  	  
+		  <dependency>
+		 	<groupId>javax</groupId>
+		 	<artifactId>javaee-api</artifactId>
+		  	<version>7.0</version>
+			<scope>provided</scope>
+		</dependency>
+		
 	  	<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
 		<dependency>
 		    <groupId>org.hibernate</groupId>
@@ -76,6 +90,11 @@
 	    	<version>${project.version}</version>
 	    </dependency>
 	    <dependency>
+	    	<groupId>${project.groupId}</groupId>
+	    	<artifactId>boris-pizzeria-admin-web</artifactId>
+	    	<version>${project.version}</version>
+	    </dependency>
+	    <dependency>
     		<groupId>mysql</groupId>
     		<artifactId>mysql-connector-java</artifactId>
    		 	<version>5.1.40</version>
@@ -87,6 +106,7 @@
 		<artifactId>org.apache.commons.codec</artifactId>
 		<version>1.8</version>
 	</dependency>
+	
 	  </dependencies>
 	</dependencyManagement>
 	
