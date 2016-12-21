@@ -3,6 +3,11 @@
   <display-name>Archetype Created Web Application</display-name>
     
   <servlet>
+  	<servlet-name>Accueil</servlet-name>
+  	<servlet-class>fr.pizzeria.servlet.Accueil</servlet-class>
+  </servlet>  
+  
+  <servlet>
   	<servlet-name>ListerPizzas</servlet-name>
   	<servlet-class>fr.pizzeria.servlet.ListerPizzas</servlet-class>
   </servlet>
@@ -11,6 +16,26 @@
   	<servlet-name>EditerPizza</servlet-name>
   	<servlet-class>fr.pizzeria.servlet.EditerPizza</servlet-class>
   </servlet>
+  
+  <servlet>
+  	<servlet-name>Authentification</servlet-name>
+  	<servlet-class>fr.pizzeria.servlet.Authentification</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>SupprimerPizza</servlet-name>
+  	<servlet-class>fr.pizzeria.servlet.SupprimerPizza</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>Deconnexion</servlet-name>
+  	<servlet-class>fr.pizzeria.servlet.Deconnexion</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>Accueil</servlet-name>
+  	<url-pattern>/accueil</url-pattern>
+  </servlet-mapping>
   
   <servlet-mapping>
   	<servlet-name>ListerPizzas</servlet-name>
@@ -22,5 +47,29 @@
   	<url-pattern>/editer</url-pattern>
   </servlet-mapping>
   
+  <servlet-mapping>
+  	<servlet-name>Authentification</servlet-name>
+  	<url-pattern>/authentification</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>SupprimerPizza</servlet-name>
+  	<url-pattern>/supprimerPizza</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>Deconnexion</servlet-name>
+  	<url-pattern>/deconnexion</url-pattern>
+  </servlet-mapping>
+  
+  <filter>
+  	<filter-name>AuthFilter</filter-name>
+  	<filter-class>fr.pizzeria.filter.AuthFilter</filter-class>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>AuthFilter</filter-name>
+  	<url-pattern>/WEB-INF/admin/*</url-pattern>
+  </filter-mapping>
   
 </web-app>

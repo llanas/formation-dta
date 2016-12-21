@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import fr.pizzeria.exception.PizzaException;
 import fr.pizzeria.ihm.IhmUtil;
+import fr.pizzeria.model.Pizza;
 
 public class Modifier extends Choix {
 	
@@ -36,8 +37,8 @@ public class Modifier extends Choix {
 			prixPizza		= ihm.getDouble("Entrez le prix de la pizza");
 			typePizza		= ihm.getCategorie();
 			try {
-				indexPizza = ihm.getPizzaDao().modifier(codePizza, nomPizza, prixPizza, typePizza, oldPizza);
-				String message = (indexPizza == 0) ? "Erreur lors de la modification de pizza" : "La pizza à bien été modifié";
+				Pizza pizza = ihm.getPizzaDao().modifier(codePizza, nomPizza, prixPizza, typePizza, oldPizza);
+				String message = (pizza != null) ?  "La pizza à bien été modifié" : "Erreur lors de la modification de pizza";
 				ihm.systemOut(message);
 			} catch( PizzaException e) {
 				Logger.getLogger(e.getMessage());

@@ -33,7 +33,7 @@ public class PizzaDaoFichier implements PizzaDao {
 	}
 
 	@Override
-	public Integer ajouter(String code, String nom, Double prix, String type) throws PizzaException {
+	public Pizza ajouter(String code, String nom, Double prix, String type) throws PizzaException {
 		Pizza pizza = metier.creerPizza( code, nom, prix,  type);
 		try {
 			fichier.sauvegarderDansFichier( pizza );
@@ -42,11 +42,11 @@ public class PizzaDaoFichier implements PizzaDao {
 			Logger.getLogger(e.getMessage());
 			throw new PizzaException(e);
 		}
-		return listePizza.indexOf(pizza);
+		return pizza;
 	}
 
 	@Override
-	public Integer modifier( String code, String nom, Double prix, String type, String oldCode ) throws PizzaException {
+	public Pizza modifier( String code, String nom, Double prix, String type, String oldCode ) throws PizzaException {
 
 		Pizza pizza = metier.creerPizza(code, nom, prix, type);
 		try {
@@ -55,7 +55,7 @@ public class PizzaDaoFichier implements PizzaDao {
 			Logger.getLogger(e.getMessage());
 			throw new PizzaException(e);
 		}
-		return listePizza.indexOf(pizza);
+		return pizza;
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class PizzaDaoFichier implements PizzaDao {
 		Pizza pizza = recupererPizza(code);
 		int index = pizza.getId();
 		fichier.supprimerDansFichier(code);
-		return index;
+		return 1;
 	}
 
 	@Override

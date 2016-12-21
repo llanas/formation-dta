@@ -72,7 +72,9 @@ public class ClientDaoJPA extends MotherDaoJPA implements ClientDao {
 	@Override
 	public Client connexion(String mail, String password) throws ClientException {
 		return execute((EntityManager em, EntityTransaction et) -> {
-			TypedQuery<Client> query = em.createQuery("SELECT c FROM Client c WHERE c.mail ='" + mail + "' AND c.password='" + DigestUtils.md5Hex(password) + "'", Client.class);
+			TypedQuery<Client> query = em.createQuery("SELECT c FROM Client c WHERE c.mail =:mail AND c.password=:pwd", Client.class);
+			query.setParameter("mail", mail);
+			query.setParameter("pwd", DigestUtils.md5Hex(password));
 			return query.getSingleResult();
 		});
 	}

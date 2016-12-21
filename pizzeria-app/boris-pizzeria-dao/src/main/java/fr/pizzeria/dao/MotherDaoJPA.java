@@ -11,7 +11,6 @@ import fr.pizzeria.exception.DAOException;
 
 public class MotherDaoJPA {
 
-
 	protected EntityManagerFactory emf;
 	
 	@FunctionalInterface
@@ -27,7 +26,6 @@ public class MotherDaoJPA {
 			et.begin();
 			return run.exec(em, et);
 		} catch( PersistenceException e ) {
-			et.rollback();
 			Logger.getLogger(e.getMessage());
 			throw new DAOException(e);
 		} finally {

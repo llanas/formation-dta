@@ -40,23 +40,23 @@ public class PizzaDaoJPA extends MotherDaoJPA implements PizzaDao {
 	}
 
 	@Override
-	public Integer ajouter(String code, String nom, Double prix, String type) {
+	public Pizza ajouter(String code, String nom, Double prix, String type) {
 		return execute((EntityManager em, EntityTransaction et) -> {
 			Pizza pizza = metier.creerPizza(code, nom, prix, type);
 			em.persist(pizza);
-			return pizza.getId();
+			return pizza;
 		});
 	}
 
 	@Override
-	public Integer modifier(String code, String nom, Double prix, String type, String oldCode) throws PizzaException {
+	public Pizza modifier(String code, String nom, Double prix, String type, String oldCode) throws PizzaException {
 		return execute((EntityManager em, EntityTransaction et) -> {
 			Pizza pizza = getPizzaJPA(code, em);
 			pizza.setCode(code);
 			pizza.setNom(nom);
 			pizza.setPrix(prix);
 			pizza.setType(CategoriePizza.valueOf(type.toUpperCase()));
-			return pizza.getId();
+			return pizza;
 		});
 	}
 
@@ -70,7 +70,8 @@ public class PizzaDaoJPA extends MotherDaoJPA implements PizzaDao {
 	}
 	
 	public Pizza getPizzaJPA(String code, EntityManager em) {
-		TypedQuery<Pizza> query = em.createQuery("SELECT p FROM Pizza p WHERE p.code ='" + code + "'", Pizza.class);
+		TypedQuery<Pizza> query = em.createQuery("SELECT p FROM Pizza p WHERE p.code =:code", Pizza.class);
+		query.setParameter("code", code);
 		return query.getSingleResult();
 	}
 	

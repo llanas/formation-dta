@@ -95,7 +95,7 @@ public class PizzaDaoJDBC implements PizzaDao {
 	}
 
 	@Override
-	public Integer ajouter(String code, String nom, Double prix, String type) throws PizzaException {
+	public Pizza ajouter(String code, String nom, Double prix, String type) throws PizzaException {
 		return executePrep((Connection conn) -> {
 			PreparedStatement ps = initialisationRequetePreparee(conn, SQL_INSERT, true,
 					code, nom, prix, type);
@@ -103,12 +103,12 @@ public class PizzaDaoJDBC implements PizzaDao {
 			if( statut == 0 ){
 				throw new DAOException("Echec de l'ajout de pizza.");
 			}
-			return statut;
+			return new Pizza();
 		});
 	}
 
 	@Override
-	public Integer modifier( String code, String nom, Double prix, String type, String oldCode ) throws PizzaException {
+	public Pizza modifier( String code, String nom, Double prix, String type, String oldCode ) throws PizzaException {
 		return executePrep((Connection conn) -> {
 			PreparedStatement ps = initialisationRequetePreparee(conn, SQL_UPDATE, true, 
 					code, nom, prix, type, oldCode);
@@ -116,7 +116,7 @@ public class PizzaDaoJDBC implements PizzaDao {
 			if( statut == 0 ) {
 				throw new DAOException("Echec de la modification de la pizza");
 			}
-			return statut;
+			return new Pizza();
 		});
 	}
 
@@ -128,7 +128,7 @@ public class PizzaDaoJDBC implements PizzaDao {
 			if( statut == 0 ) {
 				throw new DAOException("Echec de la suppression de la pizza");
 			}
-			return statut;			
+			return statut;
 		});
 	}
 	
