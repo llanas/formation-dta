@@ -7,16 +7,16 @@ import fr.pizzeria.model.Livreur;
 
 public interface LivreurDao {
 	
-	Livreur recupererLivreur( Integer id ) throws LivreurException;
+	Livreur recupererLivreur( String code ) throws LivreurException;
 	
 	List<Livreur> getListLivreur() throws LivreurException;
 	
-	Integer ajouterLivreur( String prenom, String nom ) throws LivreurException;
+	Livreur ajouterLivreur( Livreur livreur ) throws LivreurException;
 
-	Integer supprimerLivreur( String mail ) throws LivreurException;
+	void supprimerLivreur( String code ) throws LivreurException;
 	
-	Integer modifierLivreur( String prenom, String nom, String mail, String password, String oldMail ) throws LivreurException;
+	Livreur modifierLivreur( Livreur livreur, String code ) throws LivreurException;
 
-	Livreur connexion(String mail, String password) throws LivreurException;
+	Livreur connexion(String code, String password) throws LivreurException;
 
 }

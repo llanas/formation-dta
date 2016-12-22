@@ -11,11 +11,11 @@ public interface ClientDao {
 	
 	List<Client> getListClient() throws ClientException;
 	
-	Integer ajouterClient( String prenom, String nom, String mail, String password ) throws ClientException;
+	Client ajouterClient( Client client ) throws ClientException;
 
-	Integer supprimerClient( String mail ) throws ClientException;
+	void supprimerClient( Client client ) throws ClientException;
 	
-	Integer modifierClient( String prenom, String nom, String mail, String password, String oldMail ) throws ClientException;
+	Client modifierClient( Client client, String oldMail ) throws ClientException;
 
 	Client connexion(String mail, String password) throws ClientException;
 }

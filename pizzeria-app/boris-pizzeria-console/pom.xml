@@ -65,6 +65,11 @@
   <dependencies>
   
   	<dependency>
+		 <groupId>javax</groupId>
+		 <artifactId>javaee-api</artifactId>
+    </dependency>
+  
+  	<dependency>
 		    <groupId>org.hibernate</groupId>
 		    <artifactId>hibernate-entitymanager</artifactId>
   	</dependency>
@@ -88,7 +93,11 @@
   		<groupId>${project.groupId}</groupId>
   		<artifactId>boris-pizzeria-model</artifactId>
   	</dependency>
-  	
+
+  	<dependency>
+  		<groupId>${project.groupId}</groupId>
+  		<artifactId>boris-pizzeria-metier</artifactId>
+  	</dependency>
   </dependencies>
   
 </project>

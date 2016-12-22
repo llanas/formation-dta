@@ -9,6 +9,9 @@ import javax.persistence.*;
 @Table(name="livreur")
 public class Livreur extends Personne {
 
+	@Column(name="code")
+	private String code;
+	
 	@OneToMany(mappedBy="livreur")
 	private Set<Commande> commandes;
 
@@ -17,8 +20,9 @@ public class Livreur extends Personne {
 		commandes = new HashSet<>();
 	}
 	
-	public Livreur( String prenom, String nom ) {
+	public Livreur( String code, String prenom, String nom ) {
 		
+		this.code = code;
 		this.prenom = prenom;
 		this.nom = nom;
 	}

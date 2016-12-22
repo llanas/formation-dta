@@ -5,6 +5,7 @@ import fr.pizzeria.dao.personne.client.ClientDaoJPA;
 import fr.pizzeria.dao.personne.livreur.LivreurDaoJPA;
 import fr.pizzeria.dao.pizza.PizzaDaoJPA;
 
+
 public class DaoJPA extends DAOFactory {
 
 	

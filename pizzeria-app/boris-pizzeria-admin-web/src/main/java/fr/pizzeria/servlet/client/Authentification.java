@@ -1,7 +1,10 @@
-package fr.pizzeria.servlet;
+package fr.pizzeria.servlet.client;
 
 import java.io.IOException;
 
+import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,9 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import fr.pizzeria.dao.DAOFactory;
 import fr.pizzeria.dao.DaoJPA;
-import fr.pizzeria.form.ConnexionForm;
+import fr.pizzeria.metier.form.ClientForm;
 import fr.pizzeria.model.Client;
 
 
@@ -20,11 +22,11 @@ public class Authentification extends HttpServlet {
 	
 	private static final String VUE_ACCUEIL			= "/WEB-INF/accueil.jsp";
 	
-	private DAOFactory dao = new DaoJPA();
+	@Produces private DaoJPA dao = new DaoJPA();
+	
+	@Inject @Named("clientForm") ClientForm form;
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		ConnexionForm form = new ConnexionForm( dao );
 		
 		Client client = form.ConnexionClient(req);
 		

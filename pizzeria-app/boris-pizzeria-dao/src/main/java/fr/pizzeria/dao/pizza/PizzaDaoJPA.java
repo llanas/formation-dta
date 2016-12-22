@@ -8,16 +8,13 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
-import fr.pizzeria.dao.MetierDaoPizza;
 import fr.pizzeria.dao.MotherDaoJPA;
 import fr.pizzeria.exception.CodeException;
 import fr.pizzeria.exception.PizzaException;
-import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
 public class PizzaDaoJPA extends MotherDaoJPA implements PizzaDao {
 	
-	private MetierDaoPizza metier = new MetierDaoPizza();
 	
 	public PizzaDaoJPA() {
 		this.emf = Persistence.createEntityManagerFactory("boris-pizzeria-app");
@@ -40,32 +37,30 @@ public class PizzaDaoJPA extends MotherDaoJPA implements PizzaDao {
 	}
 
 	@Override
-	public Pizza ajouter(String code, String nom, Double prix, String type) {
+	public Pizza ajouter(Pizza pizza) {
 		return execute((EntityManager em, EntityTransaction et) -> {
-			Pizza pizza = metier.creerPizza(code, nom, prix, type);
 			em.persist(pizza);
 			return pizza;
 		});
 	}
 
 	@Override
-	public Pizza modifier(String code, String nom, Double prix, String type, String oldCode) throws PizzaException {
+	public Pizza modifier(Pizza pizza, String oldCode) throws PizzaException {
 		return execute((EntityManager em, EntityTransaction et) -> {
-			Pizza pizza = getPizzaJPA(code, em);
-			pizza.setCode(code);
-			pizza.setNom(nom);
-			pizza.setPrix(prix);
-			pizza.setType(CategoriePizza.valueOf(type.toUpperCase()));
+			Pizza oldPizza = getPizzaJPA(oldCode, em);
+			oldPizza.setCode(pizza.getCode());
+			oldPizza.setNom(pizza.getNom());
+			oldPizza.setPrix(pizza.getPrix());
+			oldPizza.setType(pizza.getType());
 			return pizza;
 		});
 	}
 
 	@Override
-	public Integer supprimer(String code) throws PizzaException {
-		return execute((EntityManager em, EntityTransaction et) -> {
-			Pizza pizza = getPizzaJPA(code, em);
+	public void supprimer(Pizza pizza) throws PizzaException {
+		execute((EntityManager em, EntityTransaction et) -> {
 			em.remove(pizza);
-			return pizza.getId();
+			return Void.TYPE;
 		});
 	}
 	

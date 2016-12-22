@@ -1,12 +1,18 @@
 package fr.pizzeria.ihm.choix;
 
+import javax.enterprise.inject.Produces;
+
 import org.jboss.logging.Logger;
 
 import fr.pizzeria.exception.ClientException;
 import fr.pizzeria.ihm.IhmUtil;
+import fr.pizzeria.metier.client.MetierClient;
+import fr.pizzeria.model.Client;
 
 public class Inscription extends Choix {
 
+	@Produces private MetierClient metier = new MetierClient();
+	
 	public Inscription( IhmUtil ihm ) {
 		super();
 		this.ihm = ihm;
@@ -34,8 +40,8 @@ public class Inscription extends Choix {
 			mailClient = ihm.getString(30, "Entrez votre e-mail");
 			mdpClient = ihm.getString(30, "Entrez votre mot de passe");
 			try{
-				indexClient = ihm.getClientDao().ajouterClient(prenomClient, nomClient, mailClient, mdpClient);
-				String message = ( indexClient == 0 ) ? "Impossible de vous inscrire" : "Bienvenue sur l'application!";
+				Client client = ihm.getClientDao().ajouterClient(metier.creerClient(prenomClient, nomClient, mailClient, mdpClient));
+				String message = ( client == null ) ? "Impossible de vous inscrire" : "Bienvenue sur l'application!";
 				ihm.systemOut(message);
 			} catch( ClientException e ) {
 				Logger.getLogger(e.getMessage());

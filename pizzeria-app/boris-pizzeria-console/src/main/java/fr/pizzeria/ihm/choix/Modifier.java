@@ -2,11 +2,16 @@ package fr.pizzeria.ihm.choix;
 
 import java.util.logging.Logger;
 
+import javax.inject.Inject;
+
 import fr.pizzeria.exception.PizzaException;
 import fr.pizzeria.ihm.IhmUtil;
+import fr.pizzeria.metier.pizza.MetierPizza;
 import fr.pizzeria.model.Pizza;
 
 public class Modifier extends Choix {
+	
+	@Inject private MetierPizza metier;
 	
 	public Modifier( IhmUtil ihm ){
 		super();
@@ -37,7 +42,7 @@ public class Modifier extends Choix {
 			prixPizza		= ihm.getDouble("Entrez le prix de la pizza");
 			typePizza		= ihm.getCategorie();
 			try {
-				Pizza pizza = ihm.getPizzaDao().modifier(codePizza, nomPizza, prixPizza, typePizza, oldPizza);
+				Pizza pizza = ihm.getPizzaDao().modifier(metier.creerPizza(codePizza, nomPizza, prixPizza, typePizza), oldPizza);
 				String message = (pizza != null) ?  "La pizza à bien été modifié" : "Erreur lors de la modification de pizza";
 				ihm.systemOut(message);
 			} catch( PizzaException e) {

@@ -8,14 +8,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-import fr.pizzeria.dao.MetierDaoPizza;
 import fr.pizzeria.dao.MotherDaoJPA;
 import fr.pizzeria.exception.LivreurException;
 import fr.pizzeria.model.Livreur;
 
 public class LivreurDaoJPA extends MotherDaoJPA implements LivreurDao {
-	
-	private MetierDaoPizza metier = new MetierDaoPizza();
 	
 	public LivreurDaoJPA() {
 		this.emf = Persistence.createEntityManagerFactory("boris-pizzeria-app");
@@ -23,9 +20,9 @@ public class LivreurDaoJPA extends MotherDaoJPA implements LivreurDao {
 	}
 
 	@Override
-	public Livreur recupererLivreur(Integer id) throws LivreurException {
+	public Livreur recupererLivreur( String code ) throws LivreurException {
 		return execute((EntityManager em, EntityTransaction et) -> {
-			return getLivreurJPA(id, em);
+			return getLivreurJPA(code, em);
 		});
 	}
 
@@ -35,33 +32,31 @@ public class LivreurDaoJPA extends MotherDaoJPA implements LivreurDao {
 	}
 
 	@Override
-	public Integer ajouterLivreur( String prenom, String nom ) throws LivreurException {
+	public Livreur ajouterLivreur( Livreur livreur ) throws LivreurException {
 		return execute((EntityManager em, EntityTransaction et) -> {
-			Livreur livreur = metier.creerLivreur(prenom, nom);
 			em.persist(livreur);
-			return livreur.getId();
+			return livreur;
 		});
 	}
 
 	@Override
-	public Integer supprimerLivreur(String mail) throws LivreurException {
+	public void supprimerLivreur( String code ) throws LivreurException {
+		//TODO
+	}
+
+	@Override
+	public Livreur modifierLivreur( Livreur livreur, String code )	throws LivreurException {
 		return null;
 	}
 
 	@Override
-	public Integer modifierLivreur(String prenom, String nom, String mail, String password, String oldMail)
-			throws LivreurException {
+	public Livreur connexion(String code, String password) throws LivreurException {
 		return null;
 	}
 
-	@Override
-	public Livreur connexion(String mail, String password) throws LivreurException {
-		return null;
-	}
-
-	private Livreur getLivreurJPA(Integer id, EntityManager em) {
+	private Livreur getLivreurJPA( String code, EntityManager em) {
 		
-		return em.find(Livreur.class, id);
+		return em.find(Livreur.class, code);
 	}
 	
 }

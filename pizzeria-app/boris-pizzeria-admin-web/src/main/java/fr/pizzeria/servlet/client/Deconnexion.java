@@ -1,4 +1,4 @@
-package fr.pizzeria.servlet;
+package fr.pizzeria.servlet.client;
 
 import java.io.IOException;
 

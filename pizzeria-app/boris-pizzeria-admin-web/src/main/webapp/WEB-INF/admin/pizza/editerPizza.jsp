@@ -28,7 +28,7 @@
 			            <h4><c:out value="${ pizza.nom }" /></h4>
 			        </div>
 			        <div class="col-xs-6 col-sm-6 placeholder">
-			        	<form method="post" action="editer">
+			        	<form method="post" action="editerPizza">
 			        		<input type="hidden" name="oldCodePizza" id="oldCodePizza" value="<c:out value="${ pizza.code }" />"></input>
 							<div class="form-group">
 								<label for="code">Code :</label> 

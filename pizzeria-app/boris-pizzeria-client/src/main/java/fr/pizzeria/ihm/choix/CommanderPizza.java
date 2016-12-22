@@ -5,11 +5,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.enterprise.inject.Produces;
+
 import org.jboss.logging.Logger;
 
 import fr.pizzeria.exception.CommandeException;
 import fr.pizzeria.exception.LivreurException;
 import fr.pizzeria.ihm.IhmUtil;
+import fr.pizzeria.metier.commande.MetierCommande;
 import fr.pizzeria.model.Client;
 import fr.pizzeria.model.Livreur;
 import fr.pizzeria.model.Pizza;
@@ -17,6 +20,8 @@ import fr.pizzeria.model.Pizza;
 public class CommanderPizza extends Choix {
 	
 	Client client;
+	
+	@Produces private MetierCommande metier = new MetierCommande();
 	
 	public CommanderPizza(IhmUtil ihm) {
 
@@ -57,9 +62,9 @@ public class CommanderPizza extends Choix {
 					}
 				}
 			}
-			Livreur livreur = ihm.getLivreurDao().recupererLivreur(1);
+			Livreur livreur = ihm.getLivreurDao().recupererLivreur("1");
 			Date date = new Date();
-			ihm.getCommandeDao().ajouter(this.client, livreur, date, pizzasCommande);
+			ihm.getCommandeDao().ajouter(metier.creerCommande(this.client, livreur, date, pizzasCommande));
 		} catch (CommandeException | LivreurException e) {
 			Logger.getLogger(e.getMessage());
 			throw new CommandeException(e);

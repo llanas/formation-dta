@@ -1,8 +1,6 @@
 package fr.pizzeria.dao.commande;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 
 import javax.persistence.EntityManager;
@@ -10,18 +8,13 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
-import fr.pizzeria.dao.MetierDaoPizza;
 import fr.pizzeria.dao.MotherDaoJPA;
 import fr.pizzeria.exception.CommandeException;
 import fr.pizzeria.model.Client;
 import fr.pizzeria.model.Commande;
-import fr.pizzeria.model.Livreur;
-import fr.pizzeria.model.Pizza;
 
 public class CommandeDaoJPA extends MotherDaoJPA implements CommandeDao {
 	
-	private MetierDaoPizza metier = new MetierDaoPizza();
-
 	public CommandeDaoJPA() {
 		this.emf = Persistence.createEntityManagerFactory("boris-pizzeria-app");
 		java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
@@ -51,22 +44,20 @@ public class CommandeDaoJPA extends MotherDaoJPA implements CommandeDao {
 	}
 
 	@Override
-	public String ajouter(Client client, Livreur livreur, Date dateCommande, Set<Pizza> pizzas) throws CommandeException {
+	public Commande ajouter(Commande commande) throws CommandeException {
 		return execute((EntityManager em, EntityTransaction et) -> {
-			Commande commande = metier.creerCommande(client, livreur, dateCommande, pizzas);
 			em.persist(commande);
-			return commande.getNumeroCommande();
+			return commande;
 		});
 	}
 
 	@Override
-	public Integer supprimer() {
+	public void supprimer(Commande commande) {
 		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
-	public Integer modifier() {
+	public Commande modifier(Commande commande, String nCommande) {
 		// TODO Auto-generated method stub
 		return null;
 	}

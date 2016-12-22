@@ -2,10 +2,15 @@ package fr.pizzeria.ihm.choix;
 
 import java.util.logging.Logger;
 
+import javax.inject.Inject;
+
 import fr.pizzeria.exception.PizzaException;
 import fr.pizzeria.ihm.IhmUtil;
+import fr.pizzeria.metier.pizza.MetierPizza;
 
 public class Supprimer extends Choix {
+	
+	@Inject private MetierPizza metier;
 	
 	public Supprimer( IhmUtil ihm ) {
 		super();
@@ -30,9 +35,7 @@ public class Supprimer extends Choix {
 			while(indexPizza==0){
 				try {
 					codePizza = ihm.getString(3, "Entrez le code de la pizza à supprimer");
-					indexPizza = ihm.getPizzaDao().supprimer(codePizza);
-					String message = (indexPizza == 0) ? "Erreur lors de la suppression de pizza" : "La pizza à bien été supprimé";
-					ihm.systemOut(message);
+					ihm.getPizzaDao().supprimer(ihm.getPizzaDao().recupererPizza(codePizza));
 				} catch (PizzaException e) {
 					Logger.getLogger(e.getMessage());
 					throw new PizzaException(e);

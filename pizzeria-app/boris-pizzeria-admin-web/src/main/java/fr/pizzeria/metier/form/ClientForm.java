@@ -1,25 +1,31 @@
-package fr.pizzeria.form;
+package fr.pizzeria.metier.form;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.ejb.EJB;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
-import fr.pizzeria.dao.DAOFactory;
 import fr.pizzeria.exception.DAOException;
+import fr.pizzeria.metier.client.MetierClient;
+import fr.pizzeria.metier.ejb.ClientService;
 import fr.pizzeria.model.Client;
 
-public class ConnexionForm {
+@Named
+public class ClientForm {
 
 	private static final String CHAMP_LOGIN  = "mailClient";
     private static final String CHAMP_PASSWORD   = "passwordClient";
     private String resultat;
-    private DAOFactory dao;
 	private static Map<String, String> erreurs = new HashMap<>();
+	@Inject private MetierClient metier;
+	
+	@EJB private ClientService service;
 
-	public ConnexionForm(DAOFactory dao) {
-		super();
-		this.dao = dao;
+	public ClientForm( ) {
+		//CDI
 	}
 
     public String getResultat() {
@@ -37,14 +43,14 @@ public class ConnexionForm {
     	String login = getValeurChamp(request, CHAMP_LOGIN);
     	String password = getValeurChamp(request, CHAMP_PASSWORD);
     	
-    	Client client = new Client();
+    	Client client = null;
     	
     	traiterLogin(login, client);
     	traiterPassword(password, client);
     
     	try{
     		if(erreurs.isEmpty()){
-    			client = dao.getClientDao().connexion(login, password);
+    			client = service.connexion(login, password);
     			resultat = "Succés de la connexion!";
     		} else {
     			resultat = "Erreur lors de la connexion.";

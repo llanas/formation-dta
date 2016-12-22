@@ -3,15 +3,11 @@ package fr.pizzeria.dao.pizza;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import fr.pizzeria.dao.MetierDaoPizza;
 import fr.pizzeria.exception.PizzaException;
 import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
 public class PizzaDaoList implements PizzaDao {
-	
-	private MetierDaoPizza metier;
 	
 	List<Pizza> listePizza = new ArrayList<>();
 	
@@ -41,7 +37,6 @@ public class PizzaDaoList implements PizzaDao {
 	@Override
 	public Pizza recupererPizza( String code ) throws PizzaException{
 		
-		metier.verifierCode(code);
 		if (listePizza.stream().filter(p -> p.getCode().equals(code)).findFirst().isPresent()) {
 			return listePizza.stream().filter(p -> p.getCode().equals(code)).findFirst().get();
 		} else {
@@ -58,9 +53,8 @@ public class PizzaDaoList implements PizzaDao {
 	 * Retourne la taille de {@link #listePizza} (qui correspond � l'index de la derni�re pizza ajouter)
 	 */
 	@Override
-	public Pizza ajouter( String code, String nom, Double prix, String type ) throws PizzaException {
+	public Pizza ajouter( Pizza pizza ) throws PizzaException {
 		
-		Pizza pizza =  metier.creerPizza( code, nom, prix,  type );
 		listePizza.add( pizza );
 		return pizza;
 	}
@@ -79,13 +73,13 @@ public class PizzaDaoList implements PizzaDao {
 	 * 
 	 */
 	@Override
-	public Pizza modifier( String code, String nom, Double prix, String type, String oldCode ) throws PizzaException {
+	public Pizza modifier( Pizza pizza, String oldCode ) throws PizzaException {
 		
-		Pizza pizza = recupererPizza(oldCode);
-		pizza.setCode(metier.verifierCode(code));
-		pizza.setNom(metier.verifierNom(nom));
-		pizza.setPrix(metier.verifierPrix(prix));
-		pizza.setType(metier.verifierType(type));
+		Pizza oldPizza = recupererPizza(oldCode);
+		oldPizza.setCode(pizza.getCode());
+		oldPizza.setNom(pizza.getNom());
+		oldPizza.setPrix(pizza.getPrix());
+		oldPizza.setType(pizza.getType());
 		return pizza;	
 	}
 
@@ -96,11 +90,8 @@ public class PizzaDaoList implements PizzaDao {
 	 * 
 	 */
 	@Override
-	public Integer supprimer( String code ) throws PizzaException {
+	public void supprimer( Pizza pizza ) throws PizzaException {
 		
-		metier.verifierCode(code);
-		Pizza pizza = recupererPizza(code);
 		listePizza.remove(pizza);
-		return  1;	
 	}	
 }

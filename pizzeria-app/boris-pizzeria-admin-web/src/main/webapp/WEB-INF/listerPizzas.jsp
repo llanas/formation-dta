@@ -41,17 +41,23 @@
               	<c:forEach var="pizza" items="${ requestScope.pizzas }">
 		                <tr>
 			                <td></td>
-			                <td>${ pizza.code }"</td>
-			                <td><a href="<c:url value="/afficherPizza?code=${pizza.code}"/>">${ pizza.nom }"</a></td>
+			                <td>${ pizza.code }</td>
+			                <td><a href="<c:url value="/afficherPizza?code=${pizza.code}"/>">${ pizza.nom }</a></td>
 			                <td>${ pizza.code }</td>
 			                <td>${ pizza.type }</td>
-			                <td><a href="<c:url value="/editer?code=${ pizza.code }"/>"><button type="button" class="btn btn-primary">Modifier</button></a>
-			                <td><a href="<c:url value="/supprimerPizza?code=${ pizza.code }" />"><button type="button" class="btn btn-danger">Supprimer</button></a>
+			                <c:if test="${ sessionScope.sessionClient != null }">
+				                <td><a href="<c:url value="/admin/editer?code=${ pizza.code }"/>"><button type="button" class="btn btn-primary">Modifier</button></a></td>
+				                <td><a href="<c:url value="/admin/supprimerPizza?code=${ pizza.code }" />"><button type="button" class="btn btn-danger">Supprimer</button></a></td>
+				            </c:if>
 		                </tr>
               	</c:forEach>
               </tbody>
             </table>
+            
           </div>
+          <c:if test="${ sessionScope.sessionClient != null }">
+          	<a href="<c:url value="/admin/ajouterPizza" /> "><button type="button" class="btn btn-primary">Ajouter</button></a>
+        	</c:if>
         </div>
       </div>
     </div>

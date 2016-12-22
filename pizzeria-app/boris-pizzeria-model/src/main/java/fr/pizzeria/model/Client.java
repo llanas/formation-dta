@@ -41,4 +41,8 @@ public class Client extends Personne {
 	public void setPassword(String password) {
 		this.password = DigestUtils.md5Hex(password);
 	}
+
+	public String getPassword() {
+		return this.password;
+	}
 }

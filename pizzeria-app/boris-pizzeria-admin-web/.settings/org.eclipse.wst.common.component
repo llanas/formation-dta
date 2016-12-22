@@ -10,6 +10,9 @@
         <dependent-module archiveName="boris-pizzeria-model-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/boris-pizzeria-model/boris-pizzeria-model">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="boris-pizzeria-metier-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/boris-pizzeria-metier/boris-pizzeria-metier">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="boris-pizzeria-admin-web"/>
         <property name="java-output-path" value="/boris-pizzeria-admin-web/target/classes"/>
     </wb-module>

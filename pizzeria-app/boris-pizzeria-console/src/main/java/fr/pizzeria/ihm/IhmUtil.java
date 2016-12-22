@@ -17,6 +17,8 @@ import fr.pizzeria.exception.ClientException;
 import fr.pizzeria.exception.LivreurException;
 import fr.pizzeria.exception.PizzaException;
 import fr.pizzeria.model.CategoriePizza;
+import fr.pizzeria.model.Client;
+import fr.pizzeria.model.Livreur;
 import fr.pizzeria.model.Pizza;
 
 public class IhmUtil {
@@ -187,14 +189,14 @@ public class IhmUtil {
 		listePizza.add(new Pizza(8, "IND","L'Indienne",14.00, CategoriePizza.VIANDE));
 		
 		listePizza.forEach(p -> {
-			getPizzaDao().ajouter(p.getCode(), p.getNom(), p.getPrix(), p.getType().toString());
+			getPizzaDao().ajouter(p);
 		});
 		
 		
 		try {
-			getClientDao().ajouterClient("Boris", "Maurence", "boris@maurence.com", "1234");
-			getClientDao().ajouterClient("test", "test", "test@test.com", "1234");
-			getLivreurDao().ajouterLivreur("Livreur1", "Livreur1");
+			getClientDao().ajouterClient(new Client("Boris", "Maurence", "boris@maurence.com", "1234"));
+			getClientDao().ajouterClient(new Client("test", "test", "test@test.com", "1234"));
+			getLivreurDao().ajouterLivreur(new Livreur("1", "Livreur1", "Livreur1"));
 		} catch ( ClientException | LivreurException e) {
 			Logger.getLogger(e.getMessage());
 			throw new PizzaException(e);

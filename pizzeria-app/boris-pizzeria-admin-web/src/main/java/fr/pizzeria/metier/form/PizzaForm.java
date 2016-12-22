@@ -1,14 +1,20 @@
-package fr.pizzeria.form;
+package fr.pizzeria.metier.form;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
-import fr.pizzeria.dao.DAOFactory;
+import fr.pizzeria.dao.DaoJPA;
 import fr.pizzeria.exception.DAOException;
+import fr.pizzeria.metier.ejb.PizzaService;
+import fr.pizzeria.metier.pizza.MetierPizza;
 import fr.pizzeria.model.Pizza;
 
+@Named
 public class PizzaForm {
 	
 	private static final String CHAMP_CODE		= "codePizza";
@@ -18,11 +24,16 @@ public class PizzaForm {
 	private static final String CHAMP_OLD_CODE  = "oldCodePizza";
 	private String resultat;
 	private static Map<String, String> erreurs = new HashMap<>();
-	private DAOFactory dao;
+	@Inject private DaoJPA dao;
+	@Inject private MetierPizza metier;
+	private PizzaService service = new PizzaService();
 	
-	public PizzaForm(DAOFactory dao) {
-		super();
-		this.dao = dao;
+	
+	/**
+	 * Constructeur vide pour injection de dépendances
+	 */
+	public PizzaForm() {
+		//CDI
 	}
 
     public String getResultat() {
@@ -46,12 +57,12 @@ public class PizzaForm {
 		
 		try{
 			if(erreurs.isEmpty()) {
-				pizza = dao.getPizzaDao().modifier(code, nom, prix, type, oldCode);
+				pizza = dao.getPizzaDao().modifier(metier.creerPizza(code, nom, prix, type), oldCode);
 				resultat = "La pizza à été modifié";
 			} else {
 				resultat = "Erreur lors de la modification";
 			}
-		} catch(DAOException e) {
+		} catch( DAOException e ) {
 			erreurs.put("Imprévu", "Erreurs lors de la modification de la pizza");
 			resultat = "Données non valide";
 			e.printStackTrace();
@@ -72,12 +83,12 @@ public class PizzaForm {
 		
 		try{
 			if(erreurs.isEmpty()){
-				pizza = dao.getPizzaDao().ajouter(code, nom, prix, type);
+				pizza = service.ajouterPizza(metier.creerPizza(code, nom, prix, type));
 				resultat = "La pizza à été ajouter";
 			} else {
 				resultat = "Erreur lors de l'ajout de la pizza";
 			}
-		} catch( DAOException e) {
+		} catch( DAOException e ) {
 			erreurs.put("Imprevu", "Erreur lors de l'ajout de pizza");
 			resultat = "Données invalides";
 			e.printStackTrace();
@@ -97,8 +108,4 @@ public class PizzaForm {
 			return valeur.trim();
 		}
 	}
-    
-    private static void setErreur( String champ, String message ) {
-    	erreurs.put( champ, message );
-    }
 }

@@ -16,6 +16,7 @@
 	  	<module>boris-pizzeria-model</module>
 	  	<module>boris-pizzeria-admin-web</module>
 	  	<module>boris-pizzeria-client</module>
+	  	<module>boris-pizzeria-metier</module>
 	</modules>
 	
  	<build>
@@ -28,8 +29,16 @@
 						<target>1.8</target>
 					</configuration>
 	 			</plugin>
+	 			<plugin>
+                 <artifactId>maven-war-plugin</artifactId>
+                 <configuration>
+                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                 </configuration>
+             </plugin>
 	 		</plugins>
 	 	</pluginManagement>
+	 	
+	 	
 	 	
  	</build>
  
@@ -63,7 +72,7 @@
 		    <groupId>org.hibernate</groupId>
 		    <artifactId>hibernate-entitymanager</artifactId>
 		    <version>5.1.0.Final</version>
-		    <scope>compile</scope>
+		    <scope>provided</scope>
 		</dependency>
 	  	
 	  	<!-- https://mvnrepository.com/artifact/org.hibernate.javax.persistence/hibernate-jpa-2.1-api -->
@@ -71,8 +80,11 @@
 		    <groupId>org.hibernate.javax.persistence</groupId>
 		    <artifactId>hibernate-jpa-2.1-api</artifactId>
 		    <version>1.0.0.Final</version>
-		    <scope>compile</scope>
+		    <scope>provided</scope>
 		</dependency>
+		
+		
+		
 	    <dependency>
 	      <groupId>junit</groupId>
 	      <artifactId>junit</artifactId>
@@ -92,6 +104,11 @@
 	    <dependency>
 	    	<groupId>${project.groupId}</groupId>
 	    	<artifactId>boris-pizzeria-admin-web</artifactId>
+	    	<version>${project.version}</version>
+	    </dependency>
+	    <dependency>
+	    	<groupId>${project.groupId}</groupId>
+	    	<artifactId>boris-pizzeria-metier</artifactId>
 	    	<version>${project.version}</version>
 	    </dependency>
 	    <dependency>
