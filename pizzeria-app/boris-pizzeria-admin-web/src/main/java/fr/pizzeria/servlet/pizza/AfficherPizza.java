@@ -11,22 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.pizzeria.metier.ejb.PizzaService;
 
-@WebServlet("/admin/supprimerPizza")
-public class SupprimerPizza extends HttpServlet {
+@WebServlet("/afficherPizza")
+public class AfficherPizza extends HttpServlet{
 	
 	@EJB private PizzaService sPizza;
-	
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		String code = req.getParameter("code");
 		
-		sPizza.supprimerPizza(code);
+		req.setAttribute("pizza", sPizza.recupererPizza(code));
 		
-		this.getServletContext().getRequestDispatcher("/listerPizza").forward(req, resp);
+		this.getServletContext().getRequestDispatcher("/WEB-INF/afficherPizza.jsp").forward(req, resp);
 	}
 
 	
-	
 }
-	

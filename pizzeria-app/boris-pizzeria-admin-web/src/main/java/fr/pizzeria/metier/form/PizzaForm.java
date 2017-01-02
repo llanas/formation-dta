@@ -3,12 +3,10 @@ package fr.pizzeria.metier.form;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
-import fr.pizzeria.dao.DaoJPA;
 import fr.pizzeria.exception.DAOException;
 import fr.pizzeria.metier.ejb.PizzaService;
 import fr.pizzeria.metier.pizza.MetierPizza;
@@ -24,9 +22,8 @@ public class PizzaForm {
 	private static final String CHAMP_OLD_CODE  = "oldCodePizza";
 	private String resultat;
 	private static Map<String, String> erreurs = new HashMap<>();
-	@Inject private DaoJPA dao;
-	@Inject private MetierPizza metier;
-	private PizzaService service = new PizzaService();
+	private MetierPizza metier = new MetierPizza();
+	@EJB private PizzaService service;
 	
 	
 	/**
@@ -57,7 +54,7 @@ public class PizzaForm {
 		
 		try{
 			if(erreurs.isEmpty()) {
-				pizza = dao.getPizzaDao().modifier(metier.creerPizza(code, nom, prix, type), oldCode);
+				pizza = service.modifierPizza(metier.creerPizza(code, nom, prix, type), oldCode);
 				resultat = "La pizza à été modifié";
 			} else {
 				resultat = "Erreur lors de la modification";

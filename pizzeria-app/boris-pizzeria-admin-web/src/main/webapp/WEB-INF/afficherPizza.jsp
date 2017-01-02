@@ -10,8 +10,8 @@
 
     <title><c:out value="${ pizza.nom }" /></title>
 
-    <link type="text/css" href="<c:url value="/css/bootstrap.css" />" rel="stylesheet">
-   	<link type="text/css" href="<c:url value="/css/style.css" />" rel="stylesheet">
+    <link type="text/css" href="<c:url value="/dist/css/bootstrap.css" />" rel="stylesheet">
+   	<link type="text/css" href="<c:url value="/dist/css/style.css" />" rel="stylesheet">
 
   </head>
 <body>

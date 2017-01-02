@@ -10,8 +10,8 @@
 
     <title>Liste Pizzas</title>
 
-    <link type="text/css" href="<c:url value="/css/bootstrap.css" />" rel="stylesheet">
-   	<link type="text/css" href="<c:url value="/css/style.css" />" rel="stylesheet">
+    <link type="text/css" href="<c:url value="/dist/css/bootstrap.css" />" rel="stylesheet">
+   	<link type="text/css" href="<c:url value="/dist/css/style.css" />" rel="stylesheet">
 
   </head>
   <body>
@@ -19,7 +19,7 @@
 
 	<c:import url="/WEB-INF/inc/navbar.jsp" />
 	  
-    <div class="container-fluid">
+    <div class="container">
       <div class="row">
         <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main topMerge">		
          <h2>Pizzas</h2>
@@ -40,13 +40,13 @@
               <tbody>
               	<c:forEach var="pizza" items="${ requestScope.pizzas }">
 		                <tr>
-			                <td></td>
+			                <td>${ pizza.id }</td>
 			                <td>${ pizza.code }</td>
 			                <td><a href="<c:url value="/afficherPizza?code=${pizza.code}"/>">${ pizza.nom }</a></td>
 			                <td>${ pizza.code }</td>
 			                <td>${ pizza.type }</td>
 			                <c:if test="${ sessionScope.sessionClient != null }">
-				                <td><a href="<c:url value="/admin/editer?code=${ pizza.code }"/>"><button type="button" class="btn btn-primary">Modifier</button></a></td>
+				                <td><a href="<c:url value="/admin/editerPizza?code=${ pizza.code }"/>"><button type="button" class="btn btn-primary">Modifier</button></a></td>
 				                <td><a href="<c:url value="/admin/supprimerPizza?code=${ pizza.code }" />"><button type="button" class="btn btn-danger">Supprimer</button></a></td>
 				            </c:if>
 		                </tr>

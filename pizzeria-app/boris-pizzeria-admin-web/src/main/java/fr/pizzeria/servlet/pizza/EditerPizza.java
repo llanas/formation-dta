@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.pizzeria.dao.DaoJPA;
 import fr.pizzeria.metier.ejb.PizzaService;
 import fr.pizzeria.metier.form.PizzaForm;
 import fr.pizzeria.model.CategoriePizza;
@@ -24,7 +22,7 @@ import fr.pizzeria.model.Pizza;
 @WebServlet("/admin/editerPizza")
 public class EditerPizza extends HttpServlet {
 	
-	private static final String VUE_EDITER_PIZZA 		= "/WEB-INF/admin/editerPizza.jsp";
+	private static final String VUE_EDITER_PIZZA 		= "/WEB-INF/admin/pizza/editerPizza.jsp";
 	private static final String VUE_AFFICHER_PIZZA		= "/WEB-INF/admin/afficherPizza.jsp";
 	private static final String VUE_ERREUR				= "/WEB-INF/erreur.jsp";
 	
@@ -32,8 +30,6 @@ public class EditerPizza extends HttpServlet {
 	private static final String PIZZA_CODE 				= "code";
 	private static final String TYPE					= "type";
 	
-	@Produces private DaoJPA dao = new DaoJPA();
-			
 	@EJB private PizzaService service;
 
 	@Inject @Named("pizzaForm") PizzaForm form;

@@ -10,8 +10,8 @@
 	
 	<title>Modifier Pizza</title>
 
-    <link type="text/css" href="<c:url value="/css/bootstrap.css" />" rel="stylesheet">
-   	<link type="text/css" href="<c:url value="/css/style.css" />" rel="stylesheet">
+    <link type="text/css" href="<c:url value="/dist/css/bootstrap.css" />" rel="stylesheet">
+   	<link type="text/css" href="<c:url value="/dist/css/style.css" />" rel="stylesheet">
 </head>
 <body>
 	<c:import url="/WEB-INF/inc/navbar.jsp" />
@@ -24,7 +24,7 @@
 					<h2>Modification de PIZZA</h2>
 				</div>
 			        <div class="col-xs-6 col-sm-6 placeholder">
-			        	<img src="img/reine.jpg" width="400" height="400" class="img-fluid" alt="Generic placeholder thumbnail">
+			        	<img src="<c:url value="/dist/img/Pizzas/Pizza_Reine.jpg" />" width="400" height="400" class="img-fluid" alt="Photo <c:out value="${ pizza.nom }"/>"> 
 			            <h4><c:out value="${ pizza.nom }" /></h4>
 			        </div>
 			        <div class="col-xs-6 col-sm-6 placeholder">

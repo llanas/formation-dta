@@ -3,6 +3,7 @@ package fr.pizzeria.metier.pizza;
 import java.util.List;
 import java.util.stream.Stream;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
 import fr.pizzeria.exception.CodeException;
@@ -13,7 +14,9 @@ import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Livreur;
 import fr.pizzeria.model.Pizza;
 
+
 @Named
+@ApplicationScoped
 public class MetierPizza {
 	
 	private static final String NOT_VALIDE 			= " n'est pas valide";

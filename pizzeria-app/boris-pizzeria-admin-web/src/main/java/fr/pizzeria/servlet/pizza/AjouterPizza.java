@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.ejb.EJB;
-import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
@@ -15,8 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.pizzeria.dao.DaoJPA;
-import fr.pizzeria.metier.ejb.PizzaService;
 import fr.pizzeria.metier.form.PizzaForm;
 import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
@@ -29,9 +25,7 @@ public class AjouterPizza extends HttpServlet {
 
 	private static final String TYPE					= "type";
 
-	@Inject @Named("pizzaForm") PizzaForm form;
-	
-	@EJB private PizzaService service;
+	@Inject @Named("pizzaForm") private PizzaForm form;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

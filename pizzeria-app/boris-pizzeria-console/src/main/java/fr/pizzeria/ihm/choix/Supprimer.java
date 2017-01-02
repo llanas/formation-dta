@@ -2,15 +2,11 @@ package fr.pizzeria.ihm.choix;
 
 import java.util.logging.Logger;
 
-import javax.inject.Inject;
-
 import fr.pizzeria.exception.PizzaException;
 import fr.pizzeria.ihm.IhmUtil;
-import fr.pizzeria.metier.pizza.MetierPizza;
 
 public class Supprimer extends Choix {
 	
-	@Inject private MetierPizza metier;
 	
 	public Supprimer( IhmUtil ihm ) {
 		super();

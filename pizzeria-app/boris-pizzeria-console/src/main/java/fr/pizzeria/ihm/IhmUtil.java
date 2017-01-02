@@ -179,14 +179,14 @@ public class IhmUtil {
 	public void importationDonnee() {
 		
 		List<Pizza> listePizza = new ArrayList<>();
-		listePizza.add(new Pizza(1, "PEP","Pépéroni",12.50, CategoriePizza.VIANDE));
-		listePizza.add(new Pizza(2, "MAR","Margherita",14.00, CategoriePizza.VIANDE));
-		listePizza.add(new Pizza(3, "REI","La Reine",11.50, CategoriePizza.VIANDE));
-		listePizza.add(new Pizza(4, "FRO","La 4 Fromages",12.00, CategoriePizza.SANS_VIANDE));
-		listePizza.add(new Pizza(5, "CAN","Cannibale",12.50, CategoriePizza.VIANDE));
-		listePizza.add(new Pizza(6, "SAV","Savoyarde",13.00, CategoriePizza.VIANDE));
-		listePizza.add(new Pizza(7, "ORI","L'Orientale",13.50, CategoriePizza.VIANDE));
-		listePizza.add(new Pizza(8, "IND","L'Indienne",14.00, CategoriePizza.VIANDE));
+		listePizza.add(new Pizza("PEP","Pépéroni",12.50, CategoriePizza.VIANDE));
+		listePizza.add(new Pizza("MAR","Margherita",14.00, CategoriePizza.VIANDE));
+		listePizza.add(new Pizza("REI","La Reine",11.50, CategoriePizza.VIANDE));
+		listePizza.add(new Pizza("FRO","La 4 Fromages",12.00, CategoriePizza.SANS_VIANDE));
+		listePizza.add(new Pizza("CAN","Cannibale",12.50, CategoriePizza.VIANDE));
+		listePizza.add(new Pizza("SAV","Savoyarde",13.00, CategoriePizza.VIANDE));
+		listePizza.add(new Pizza("ORI","L'Orientale",13.50, CategoriePizza.VIANDE));
+		listePizza.add(new Pizza("IND","L'Indienne",14.00, CategoriePizza.VIANDE));
 		
 		listePizza.forEach(p -> {
 			getPizzaDao().ajouter(p);
@@ -201,9 +201,6 @@ public class IhmUtil {
 			Logger.getLogger(e.getMessage());
 			throw new PizzaException(e);
 		}
-		
-		
-		
 	}
 	
 	public PizzaDao getPizzaDao() {

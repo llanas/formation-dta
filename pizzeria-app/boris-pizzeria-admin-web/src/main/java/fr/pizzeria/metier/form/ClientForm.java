@@ -4,12 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.ejb.EJB;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 import fr.pizzeria.exception.DAOException;
-import fr.pizzeria.metier.client.MetierClient;
 import fr.pizzeria.metier.ejb.ClientService;
 import fr.pizzeria.model.Client;
 
@@ -20,7 +18,6 @@ public class ClientForm {
     private static final String CHAMP_PASSWORD   = "passwordClient";
     private String resultat;
 	private static Map<String, String> erreurs = new HashMap<>();
-	@Inject private MetierClient metier;
 	
 	@EJB private ClientService service;
 
@@ -36,7 +33,7 @@ public class ClientForm {
     	return erreurs;
     }
 
-	public Client ConnexionClient( HttpServletRequest request ) {
+	public Client connexionClient( HttpServletRequest request ) {
     	
     	erreurs.clear();
     	
