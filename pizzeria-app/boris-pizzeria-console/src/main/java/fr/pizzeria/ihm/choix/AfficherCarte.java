@@ -1,8 +1,11 @@
 package fr.pizzeria.ihm.choix;
 
+import fr.pizzeria.dao.pizza.PizzaDao;
 import fr.pizzeria.ihm.IhmUtil;
 
 public class AfficherCarte extends Choix {
+
+	private PizzaDao pizzaDao;
 	
 	public AfficherCarte( IhmUtil ihm ) {
 		super();
@@ -13,16 +16,16 @@ public class AfficherCarte extends Choix {
 		super();
 		this.ihm = ihm;
 		this.indexMenu = indexMenu;
+		pizzaDao = ihm.getPizzaDao();
 		this.setDescription(indexMenu + " - AFFICHER LA CARTE - " + indexMenu);
 	}
 
 	public void executer() {
 		
-		
-		if( ihm.getPizzaDao().getListePizza().isEmpty() ) {
+		if( pizzaDao.getListePizza().isEmpty() ) {
 			ihm.systemOut("La liste ne contient plus de pizza!");
 		} else {
-			ihm.getPizzaDao().getListePizza().forEach(ihm::afficherPizza);
+			pizzaDao.getListePizza().forEach(ihm::afficherPizza);
 		}
 	}
 }

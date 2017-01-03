@@ -6,6 +6,7 @@ import java.util.Scanner;
 import org.jboss.logging.Logger;
 
 import fr.pizzeria.dao.DAOFactory;
+import fr.pizzeria.dao.DaoREST;
 import fr.pizzeria.exception.FichierException;
 import fr.pizzeria.ihm.IhmUtil;
 import fr.pizzeria.ihm.Menu;
@@ -46,11 +47,10 @@ public class ConsoleApp {
 			throw new FichierException(e);
 		}
 		
-		IhmUtil ihm = new IhmUtil( 100, new Scanner(System.in), daoFactory);
+		IhmUtil ihm = new IhmUtil( 100, new Scanner(System.in), new DaoREST());
 
 		Menu application = new Menu(ihm);
 		
-		ihm.importationDonnee();
 		
 		ihm.systemOut("LOGICIEL ADMINISTRATEUR PIZZERIA");
 		

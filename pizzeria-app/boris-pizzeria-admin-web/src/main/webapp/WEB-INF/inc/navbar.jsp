@@ -11,10 +11,10 @@
 					<a class="nav-link" href="<c:url value="/accueil" /> "> Accueil <span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<c:url value="/listerPizza" />">ListePizza </a>
+					<a class="nav-link" href="<c:url value="/listerPizza" />"> ListePizza </a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Contact </a>
+					<a class="nav-link" href="<c:url value="/clients" />"> Clients </a>
 				</li>
 			</ul>
 				<c:choose>

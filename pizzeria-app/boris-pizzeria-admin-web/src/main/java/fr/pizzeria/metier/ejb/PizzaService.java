@@ -3,8 +3,6 @@ package fr.pizzeria.metier.ejb;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -36,7 +34,6 @@ public class PizzaService {
 		return query.getSingleResult();
 	}
 	
-	@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	public Pizza modifierPizza( Pizza pizza, String oldCode ) {
 		
 		Pizza oldPizza = recupererPizza(oldCode);
@@ -47,7 +44,6 @@ public class PizzaService {
 		return pizza;
 	}
 	
-	@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	public void supprimerPizza( String code ) {
 		Pizza pizza = recupererPizza(code);
 		em.remove(pizza);

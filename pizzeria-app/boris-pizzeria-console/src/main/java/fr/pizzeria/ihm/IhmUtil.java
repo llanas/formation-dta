@@ -176,32 +176,32 @@ public class IhmUtil {
 		return sc;
 	}
 	
-	public void importationDonnee() {
-		
-		List<Pizza> listePizza = new ArrayList<>();
-		listePizza.add(new Pizza("PEP","Pépéroni",12.50, CategoriePizza.VIANDE));
-		listePizza.add(new Pizza("MAR","Margherita",14.00, CategoriePizza.VIANDE));
-		listePizza.add(new Pizza("REI","La Reine",11.50, CategoriePizza.VIANDE));
-		listePizza.add(new Pizza("FRO","La 4 Fromages",12.00, CategoriePizza.SANS_VIANDE));
-		listePizza.add(new Pizza("CAN","Cannibale",12.50, CategoriePizza.VIANDE));
-		listePizza.add(new Pizza("SAV","Savoyarde",13.00, CategoriePizza.VIANDE));
-		listePizza.add(new Pizza("ORI","L'Orientale",13.50, CategoriePizza.VIANDE));
-		listePizza.add(new Pizza("IND","L'Indienne",14.00, CategoriePizza.VIANDE));
-		
-		listePizza.forEach(p -> {
-			getPizzaDao().ajouter(p);
-		});
-		
-		
-		try {
-			getClientDao().ajouterClient(new Client("Boris", "Maurence", "boris@maurence.com", "1234"));
-			getClientDao().ajouterClient(new Client("test", "test", "test@test.com", "1234"));
-			getLivreurDao().ajouterLivreur(new Livreur("1", "Livreur1", "Livreur1"));
-		} catch ( ClientException | LivreurException e) {
-			Logger.getLogger(e.getMessage());
-			throw new PizzaException(e);
-		}
-	}
+//	public void importationDonnee() {
+//		
+//		List<Pizza> listePizza = new ArrayList<>();
+//		listePizza.add(new Pizza("PEP","Pépéroni",12.50, CategoriePizza.VIANDE));
+//		listePizza.add(new Pizza("MAR","Margherita",14.00, CategoriePizza.VIANDE));
+//		listePizza.add(new Pizza("REI","La Reine",11.50, CategoriePizza.VIANDE));
+//		listePizza.add(new Pizza("FRO","La 4 Fromages",12.00, CategoriePizza.SANS_VIANDE));
+//		listePizza.add(new Pizza("CAN","Cannibale",12.50, CategoriePizza.VIANDE));
+//		listePizza.add(new Pizza("SAV","Savoyarde",13.00, CategoriePizza.VIANDE));
+//		listePizza.add(new Pizza("ORI","L'Orientale",13.50, CategoriePizza.VIANDE));
+//		listePizza.add(new Pizza("IND","L'Indienne",14.00, CategoriePizza.VIANDE));
+//		
+//		listePizza.forEach(p -> {
+//			getPizzaDao().ajouter(p);
+//		});
+//		
+//		
+//		try {
+//			getClientDao().ajouterClient(new Client("Boris", "Maurence", "boris@maurence.com", "1234"));
+//			getClientDao().ajouterClient(new Client("test", "test", "test@test.com", "1234"));
+//			getLivreurDao().ajouterLivreur(new Livreur("1", "Livreur1", "Livreur1"));
+//		} catch ( ClientException | LivreurException e) {
+//			Logger.getLogger(e.getMessage());
+//			throw new PizzaException(e);
+//		}
+//	}
 	
 	public PizzaDao getPizzaDao() {
 		

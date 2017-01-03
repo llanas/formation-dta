@@ -29,25 +29,17 @@
 				</ol>
 				<div class="carousel-inner" role="listbox">
 					<div class="carousel-item active">
-						<img src="<c:url value="dist/img/Carousel/Carousel1.jpg" />"
-							alt="First slide">
+						<img src="<c:url value="dist/img/Carousel/Carousel1.jpg" />" alt="First slide">
 					</div>
 					<div class="carousel-item">
-						<img src="<c:url value="dist/img/Carousel/Carousel2.jpg" />"
-							alt="Second slide">
+						<img src="<c:url value="dist/img/Carousel/Carousel2.jpg" />" alt="Second slide">
 					</div>
 					<div class="carousel-item">
-						<img src="<c:url value="dist/img/Carousel/Carousel3.jpg" />"
-							alt="Third slide">
+						<img src="<c:url value="dist/img/Carousel/Carousel3.jpg" />" alt="Third slide">
 					</div>
 				</div>
-				<a class="left carousel-control" href="#carousel-example-generic"
-					role="button" data-slide="prev"> <span class="icon-prev"
-					aria-hidden="true"></span> <span class="sr-only">Previous</span>
-				</a> <a class="right carousel-control" href="#carousel-example-generic"
-					role="button" data-slide="next"> <span class="icon-next"
-					aria-hidden="true"></span> <span class="sr-only">Next</span>
-				</a>
+				<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev"> <span class="icon-prev" aria-hidden="true"></span> <span class="sr-only">Previous</span></a>
+				<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next"> <span class="icon-next" aria-hidden="true"></span> <span class="sr-only">Next</span></a>
 			</div>
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main topMerge">		
          	<h2>BIENVENUE SUR LE SITE DE LA PIZZERIA</h2>

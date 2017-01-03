@@ -19,9 +19,9 @@ public class ClientService {
 	@PersistenceContext
 	private EntityManager em;
 	
-	public Client recupereClient( String email ) {
-		TypedQuery<Client> query = em.createQuery("SELECT c FROM Client c WHERE c.mail =:email", Client.class);
-		query.setParameter("email", email);
+	public Client recupereClient( String id ) {
+		TypedQuery<Client> query = em.createQuery("SELECT c FROM Client c WHERE c.id =:id", Client.class);
+		query.setParameter("id", id);
 		return query.getSingleResult();
 	}
 	
@@ -35,13 +35,14 @@ public class ClientService {
 		return client;
 	}
 	
-	public void supprimerClient( Client client ) {
+	public void supprimerClient( String id ) {
+		Client client = recupereClient(id);
 		em.persist(client);
 	}
 	
 	@TransactionAttribute(TransactionAttributeType.MANDATORY)
-	public Client modifierClient( Client client, String email ) {
-		Client oldClient = recupereClient(email);
+	public Client modifierClient( Client client, String id ) {
+		Client oldClient = recupereClient(id);
 		oldClient.setPrenom(client.getPrenom());
 		oldClient.setNom(client.getNom());
 		oldClient.setMail(client.getMail());
