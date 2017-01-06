@@ -1,41 +1,37 @@
 package fr.pizzeria.ihm;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
-import org.jboss.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import fr.pizzeria.dao.DAOFactory;
 import fr.pizzeria.dao.commande.CommandeDao;
 import fr.pizzeria.dao.personne.client.ClientDao;
 import fr.pizzeria.dao.personne.livreur.LivreurDao;
 import fr.pizzeria.dao.pizza.PizzaDao;
-import fr.pizzeria.exception.ClientException;
-import fr.pizzeria.exception.LivreurException;
-import fr.pizzeria.exception.PizzaException;
 import fr.pizzeria.model.CategoriePizza;
-import fr.pizzeria.model.Client;
-import fr.pizzeria.model.Livreur;
 import fr.pizzeria.model.Pizza;
 
+@Component
 public class IhmUtil {
 	
 	private Scanner sc;
+	
 	private DAOFactory daoFactory;
-	private int taille;
+	
+	private int taille = 100;
 	
 	private static final String ABANDONNER		= "99";
-	
 
-	public IhmUtil( int taille, Scanner sc, DAOFactory daoFactory ) {
+	@Autowired
+	public IhmUtil(Scanner sc, DAOFactory dao) {
 		
 		super();
 		this.sc = sc;
-		this.daoFactory = daoFactory;
-		this.taille = taille;
+		this.daoFactory = dao;
 	}
 	
 	public void systemOut( String texte ){

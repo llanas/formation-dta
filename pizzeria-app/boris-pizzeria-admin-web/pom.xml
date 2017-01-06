@@ -45,9 +45,9 @@
   	</dependency>
     
     <dependency>
-  		<groupId>${project.groupId}</groupId>
-  		<artifactId>boris-pizzeria-model</artifactId>
-  	</dependency>
+    	<groupId>${project.groupId}</groupId>
+    	<artifactId>boris-pizzeria-model</artifactId>
+    </dependency>
   	
   	<dependency>
   		<groupId>${project.groupId}</groupId>

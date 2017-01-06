@@ -8,7 +8,32 @@
   </parent>
   <artifactId>boris-pizzeria-dao</artifactId>
   <dependencies>
-  
+    
+    <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-aspects</artifactId>
+    </dependency>
+    
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-context</artifactId>
+  	</dependency>
+  	
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-test</artifactId>
+  	</dependency>
+  	
+  	<dependency>
+		    <groupId>com.h2database</groupId>
+		    <artifactId>h2</artifactId>
+	</dependency>
+  	
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-orm</artifactId>
+  	</dependency>
+  	
   	<dependency>
 		    <groupId>org.hibernate</groupId>
 		    <artifactId>hibernate-entitymanager</artifactId>
@@ -19,6 +44,11 @@
 		    <artifactId>hibernate-jpa-2.1-api</artifactId>
 	</dependency>
 	
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-jdbc</artifactId>
+	</dependency>
+
   	<dependency>
   		<groupId>junit</groupId>
   		<artifactId>junit</artifactId>

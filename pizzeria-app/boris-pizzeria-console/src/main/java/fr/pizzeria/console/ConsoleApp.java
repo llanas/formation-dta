@@ -1,14 +1,8 @@
 package fr.pizzeria.console;
 
-import java.util.ResourceBundle;
-import java.util.Scanner;
+import java.util.logging.Level;
 
-import org.jboss.logging.Logger;
-
-import fr.pizzeria.dao.DAOFactory;
-import fr.pizzeria.dao.DaoREST;
-import fr.pizzeria.exception.FichierException;
-import fr.pizzeria.ihm.IhmUtil;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import fr.pizzeria.ihm.Menu;
 
 
@@ -35,33 +29,20 @@ public class ConsoleApp {
 	public static void main(String[] args) {
 
 		boolean run = true;
-		
-		ResourceBundle bundle = ResourceBundle.getBundle("application");
-		String config = bundle.getString("dao.impl");
-		DAOFactory daoFactory;
-		
-		try {
-			daoFactory = (DAOFactory) Class.forName(config).newInstance();
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-			Logger.getLogger(e.getMessage());
-			throw new FichierException(e);
+		Menu application;
+		java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.OFF);
+		try(AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(PizzeriaAdminSpringConfig.class)){
+			application = context.getBean(Menu.class);
+			
+			application.getIhm().systemOut("LOGICIEL ADMINISTRATEUR PIZZERIA");
+			
+			while (run) {
+				application.getIhm().sl(1);
+				application.afficherMenu();
+				run = application.getChoix();
+			}
+			application.getIhm().systemOut("FERMETURE DU LOGICIEL");
+			application.getIhm().sl(1);
 		}
-		
-		IhmUtil ihm = new IhmUtil( 100, new Scanner(System.in), new DaoREST());
-
-		Menu application = new Menu(ihm);
-		
-		
-		ihm.systemOut("LOGICIEL ADMINISTRATEUR PIZZERIA");
-		
-		while (run) {
-			ihm.sl(1);
-			application.afficherMenu();
-			run = application.getChoix();
-		}
-		ihm.systemOut("FERMETURE DU LOGICIEL");
-		ihm.sl(1);
 	}
-	
-	
 }

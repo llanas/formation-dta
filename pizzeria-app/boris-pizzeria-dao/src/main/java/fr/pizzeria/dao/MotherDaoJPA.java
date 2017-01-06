@@ -6,12 +6,17 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
 
 import org.jboss.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.JpaTransactionManager;
 
 import fr.pizzeria.exception.DAOException;
 
 public class MotherDaoJPA {
 
 	protected EntityManagerFactory emf;
+	
+	@Autowired
+	JpaTransactionManager jtm;
 	
 	@FunctionalInterface
 	protected interface IEntityManager<T> {

@@ -52,6 +52,15 @@
 
 	<dependencyManagement>
 	  <dependencies>
+	 
+	  
+	  	<dependency>
+	  		<groupId>org.springframework</groupId>
+	  		<artifactId>spring-framework-bom</artifactId>
+	  		<version>4.2.6.RELEASE</version>
+	  		<type>pom</type>
+	  		<scope>import</scope>
+	  	</dependency>
 	  
 	  <!-- https://mvnrepository.com/artifact/jstl/jstl -->
 		<dependency>
@@ -59,7 +68,14 @@
 		    <artifactId>jstl</artifactId>
 		    <version>1.2</version>
 		</dependency>
-	  	  
+		
+		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+		<dependency>
+		    <groupId>com.h2database</groupId>
+		    <artifactId>h2</artifactId>
+		    <version>1.4.193</version>
+		</dependency>
+		
 		  <dependency>
 		 	<groupId>javax</groupId>
 		 	<artifactId>javaee-api</artifactId>
@@ -101,6 +117,7 @@
 	      <version>4.12</version>
 	      <scope>test</scope>
 	    </dependency>
+	    
 	    <dependency>
 	    	<groupId>${project.groupId}</groupId>
 	    	<artifactId>boris-pizzeria-dao</artifactId>

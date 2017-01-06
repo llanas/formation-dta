@@ -1,48 +1,67 @@
 package fr.pizzeria.ihm;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import fr.pizzeria.ihm.choix.AfficherCarte;
-import fr.pizzeria.ihm.choix.AfficherPizzaPlusCher;
 import fr.pizzeria.ihm.choix.Ajouter;
 import fr.pizzeria.ihm.choix.Choix;
-import fr.pizzeria.ihm.choix.ListeCategorie;
 import fr.pizzeria.ihm.choix.Modifier;
 import fr.pizzeria.ihm.choix.Supprimer;
 
+@Component
 public class Menu {
 	
-	private Map<Integer, Choix> navigateur = new HashMap<Integer, Choix>();
+	private List<Choix> navigateur = new ArrayList<>();
+	
+	@Autowired
+	private AfficherCarte afficherCarte;
+	@Autowired
+	private Ajouter ajouter;
+	@Autowired
+	private Modifier modifier;
+	@Autowired
+	private Supprimer supprimer;
+	
+	@Autowired
 	private IhmUtil ihm;
 	
-	public Menu( IhmUtil ihm ){
-		
-		Integer i = 0;
+	public IhmUtil getIhm() {
+		return ihm;
+	}
 
+	public void setIhm(IhmUtil ihm) {
 		this.ihm = ihm;
-		navigateur.put( ++i, new AfficherCarte(ihm, i));
-		navigateur.put( ++i, new ListeCategorie(ihm, i));
-		navigateur.put( ++i, new AfficherPizzaPlusCher(ihm, i));
-		navigateur.put( ++i, new Ajouter(ihm, i));
-		navigateur.put( ++i, new Modifier(ihm, i));
-		navigateur.put( ++i, new Supprimer(ihm, i));
 	}
 	
 	public void afficherMenu() {
 		
-		navigateur.forEach((i, c) -> ihm.systemOut(c.afficher()));
-		
+		navigateur.forEach(p -> ihm.systemOut(p.afficher()));
 	}
 
 	public boolean getChoix() {
 		
-		int choix = ihm.getInt(navigateur.size()+1, "Que souhaitez vous faire ?");
+		int choix = ihm.getInt(navigateur.size(), "Que souhaitez vous faire ?");
 		if(choix == 99){
 			return false;
 		} else {
 			navigateur.get(choix).executer();
 			return true;
 		}
+	}
+	
+	@PostConstruct
+	public void init() {
+		
+		navigateur.clear();
+		navigateur.add(afficherCarte);
+		navigateur.add(ajouter);
+		navigateur.add(modifier);
+		navigateur.add(supprimer);
 	}
 }

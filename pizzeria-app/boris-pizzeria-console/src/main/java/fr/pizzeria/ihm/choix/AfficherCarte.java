@@ -1,31 +1,29 @@
 package fr.pizzeria.ihm.choix;
 
-import fr.pizzeria.dao.pizza.PizzaDao;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import fr.pizzeria.ihm.IhmUtil;
+import fr.pizzeria.model.Pizza;
 
+@Component
 public class AfficherCarte extends Choix {
-
-	private PizzaDao pizzaDao;
 	
+	@Autowired
 	public AfficherCarte( IhmUtil ihm ) {
 		super();
 		this.ihm = ihm;
-	}
-	
-	public AfficherCarte( IhmUtil ihm, int indexMenu ) {
-		super();
-		this.ihm = ihm;
-		this.indexMenu = indexMenu;
-		pizzaDao = ihm.getPizzaDao();
-		this.setDescription(indexMenu + " - AFFICHER LA CARTE - " + indexMenu);
+		this.setDescription(" AFFICHER LA CARTE ");
 	}
 
 	public void executer() {
-		
-		if( pizzaDao.getListePizza().isEmpty() ) {
+		List<Pizza> listePizza = ihm.getPizzaDao().getListePizza();
+		if( listePizza.isEmpty() ) {
 			ihm.systemOut("La liste ne contient plus de pizza!");
 		} else {
-			pizzaDao.getListePizza().forEach(ihm::afficherPizza);
+			listePizza.forEach(ihm::afficherPizza);
 		}
 	}
 }
