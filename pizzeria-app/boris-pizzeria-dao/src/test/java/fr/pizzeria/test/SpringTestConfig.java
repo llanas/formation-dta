@@ -9,9 +9,11 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 @Configuration
+@EnableTransactionManagement
 @ComponentScan("fr.pizzeria")
 public class SpringTestConfig {
 
@@ -29,6 +31,6 @@ public class SpringTestConfig {
 	
 	@Bean 
 	public DataSource getDataSource(){
-		return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).addScript("pizzeriacodefirst.sql").build();
+		return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).addScript("insertData.sql").build();
 	}
 }

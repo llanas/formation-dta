@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import fr.pizzeria.model.Pizza;
 
 
 @Component
+@Qualifier("JPASpring")
 public class PizzaDaoJpaSpring implements PizzaDao{
 
 	private static final String SQL_SELECT_BY_CODE			= "SELECT p FROM Pizza p WHERE p.code =:code";
@@ -54,6 +56,7 @@ public class PizzaDaoJpaSpring implements PizzaDao{
 	}
 
 	@Override
+	@Transactional
 	public void supprimer(Pizza pizza) throws PizzaException {
 		em.remove(pizza);
 	}

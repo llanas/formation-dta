@@ -4,7 +4,7 @@ CREATE TABLE `pizza` (
   `nom` varchar(30) NOT NULL,
   `prix` double NOT NULL,
   `type` varchar(255) NOT NULL
-)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `pizza` (`id`, `code`, `nom`, `prix`, `type`) VALUES
 (2, 'MAR', 'Test', 14, 'POISSON'),
@@ -19,3 +19,9 @@ INSERT INTO `pizza` (`id`, `code`, `nom`, `prix`, `type`) VALUES
 (12, 'eza', 'Margherit', 12, 'VIANDE'),
 (13, 'PEP', 'Pépéroni', 12.5, 'VIANDE'),
 (14, 'SPR', 'spring', 15, 'VIANDE');
+
+ALTER TABLE `pizza`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `pizza`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
