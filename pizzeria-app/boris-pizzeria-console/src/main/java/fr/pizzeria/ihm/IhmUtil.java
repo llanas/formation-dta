@@ -5,6 +5,7 @@ import java.util.Scanner;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import fr.pizzeria.dao.DAOFactory;
@@ -27,7 +28,7 @@ public class IhmUtil {
 	private static final String ABANDONNER		= "99";
 
 	@Autowired
-	public IhmUtil(Scanner sc, DAOFactory dao) {
+	public IhmUtil(Scanner sc, @Qualifier("JPASpring") DAOFactory dao) {
 		
 		super();
 		this.sc = sc;

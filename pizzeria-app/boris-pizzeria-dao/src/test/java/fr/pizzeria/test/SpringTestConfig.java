@@ -33,4 +33,6 @@ public class SpringTestConfig {
 	public DataSource getDataSource(){
 		return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).addScript("insertData.sql").build();
 	}
+
 }
+

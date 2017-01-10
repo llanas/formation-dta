@@ -2,6 +2,8 @@ package fr.pizzeria.dao;
 
 
 import fr.pizzeria.dao.commande.CommandeDao;
+import fr.pizzeria.dao.ingredient.IngredientDao;
+import fr.pizzeria.dao.perf.PerfDao;
 import fr.pizzeria.dao.personne.client.ClientDao;
 import fr.pizzeria.dao.personne.livreur.LivreurDao;
 import fr.pizzeria.dao.pizza.PizzaDao;
@@ -12,6 +14,8 @@ public abstract class DAOFactory {
 	ClientDao clientDao;
 	CommandeDao commandeDao;
 	LivreurDao livreurDao;
+	PerfDao perfDao;
+	IngredientDao ingredientDao;
 	
 	public DAOFactory() {
 		super();
@@ -20,6 +24,12 @@ public abstract class DAOFactory {
 	public DAOFactory(PizzaDao pizzaDao) {
 		super();
 		this.pizzaDao = pizzaDao;
+	}
+	
+	public DAOFactory(PizzaDao pizzaDao, IngredientDao ingDao) {
+		super();
+		this.pizzaDao = pizzaDao;
+		this.ingredientDao = ingDao;
 	}
 	
 	public DAOFactory(PizzaDao pizzaDao, ClientDao clientDao){

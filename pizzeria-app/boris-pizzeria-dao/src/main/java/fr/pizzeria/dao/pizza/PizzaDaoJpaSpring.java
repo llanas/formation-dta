@@ -14,8 +14,6 @@ import fr.pizzeria.exception.PizzaException;
 import fr.pizzeria.model.Pizza;
 
 
-@Component
-@Qualifier("JPASpring")
 public class PizzaDaoJpaSpring implements PizzaDao{
 
 	private static final String SQL_SELECT_BY_CODE			= "SELECT p FROM Pizza p WHERE p.code =:code";

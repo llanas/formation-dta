@@ -7,7 +7,6 @@ import fr.pizzeria.model.Pizza;
 
 public interface PizzaDao {
 	
-	
 	Pizza recupererPizza( String code ) throws PizzaException;
 	
 	List<Pizza> getListePizza();
